@@ -70,6 +70,10 @@ class BannerServiceProvider extends ServiceProvider
     protected function publish()
     {
         $this->publishes([
+            __DIR__ . '/../resources/views/frontend' => base_path('resources/views/vendor/agenciafmd/banners/frontend'),
+        ], 'views');
+
+        $this->publishes([
             __DIR__ . '/../config/admix-banners.php' => base_path('config/admix-banners.php'),
         ], 'config');
 

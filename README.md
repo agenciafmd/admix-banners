@@ -17,6 +17,29 @@ Execute a migração
 php artisan migrate
 ```
 
+## Uso
+
+O componente utilizado para renderizar o banner, é o `\Agenciafmd\Banners\ViewComponents\BannerComponent::class`
+
+A chamada feita é:
+
+```blade
+@render(\Agenciafmd\Banners\ViewComponents\BannerComponent::class, [
+    ...
+])
+```
+
+Os valores padrões são:
+
+```
+$qty = 4, // quantidade de itens que vamos mostrar
+$place = null, // zona do banner
+$rand = false,  // mostra os banners de forma aleatoria
+$template = 'agenciafmd/banners::frontend.default' //template utilizado para renderização
+```
+
+
+
 ## Seed
 
 Para utlizar o seed do pacote, faça a publicação com o comando abaixo:
