@@ -13,7 +13,7 @@ return [
     'places' => [
         'home' => [
             'name' => 'Home',
-            'html' => true,
+            'html' => false,
             'items' => [
                 'desktop' => [
                     'width' => 1920,

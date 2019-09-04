@@ -1,0 +1,17 @@
+<?php
+
+use Agenciafmd\Banners\Banner;
+
+$factory->define(Banner::class, function (\Faker\Generator $faker) {
+    return [
+        'is_active' => 1,
+        'star' => 0,
+        'place' => key(config('admix-banners.places')),
+        'name' => ucfirst($faker->sentence()),
+        'description' => null,
+        'link' => $faker->url,
+        'target' => '_blank',
+        'published_at' => $faker->date('Y-m-d\TH:i'),
+        'until_then' => null,
+    ];
+});

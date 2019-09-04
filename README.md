@@ -17,6 +17,18 @@ Execute a migração
 php artisan migrate
 ```
 
+## Seed
+
+Para utlizar o seed do pacote, faça a publicação com o comando abaixo:
+
+```shell script
+php artisan vendor:publish --provider="Agenciafmd\Banners\Providers\BannerServiceProvider" --tag="seed" && composer dumpautoload
+```
+
+Faça a troca dos banners em `database/faker/banners` para que o projeto fique belo
+
+**Não esqueça** de adicionar o `BannersTableSeeder::class` em `database/seeds/DatabaseSeeder.php`
+
 ## Configurações
 
 Caso seja necessário alguma modificação, publique o arquivo de config com o comando:

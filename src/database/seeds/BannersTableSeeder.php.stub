@@ -1,0 +1,35 @@
+<?php
+
+use Agenciafmd\Banners\Banner;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class BannersTableSeeder extends Seeder
+{
+    protected $total = 1;
+
+    public function run()
+    {
+        Banner::withTrashed()->get()->each->forceDelete();
+
+        DB::table('media')
+            ->where('model_type', 'Agenciafmd\\Banners\\Banner')
+            ->delete();
+
+        $faker = Faker\Factory::create();
+
+        $this->command->getOutput()
+            ->progressStart($this->total);
+        factory(Banner::class, $this->total)
+            ->create()
+            ->each(function ($banner) use ($faker) {
+                $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/desktop', storage_path('admix/tmp')), 'desktop');
+                $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/tablet', storage_path('admix/tmp')), 'tablet');
+                $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/mobile', storage_path('admix/tmp')), 'mobile');
+                $this->command->getOutput()
+                    ->progressAdvance();
+            });
+        $this->command->getOutput()
+            ->progressFinish();
+    }
+}

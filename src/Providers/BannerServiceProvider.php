@@ -74,8 +74,10 @@ class BannerServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/banners'),
-        ], 'views');
+            __DIR__ . '/../database/factories/BannerFactory.php.stub' => base_path('database/factories/BannerFactory.php'),
+            __DIR__ . '/../database/faker' => base_path('database/faker'),
+            __DIR__ . '/../database/seeds/BannersTableSeeder.php.stub' => base_path('database/seeds/BannersTableSeeder.php'),
+        ], 'seed');
     }
 
     public function setLocalFactories()
