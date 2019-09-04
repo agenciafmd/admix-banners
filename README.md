@@ -33,7 +33,7 @@ Os valores padrões são:
 
 ```
 $qty = 4, // quantidade de itens que vamos mostrar
-$place = null, // zona do banner
+$location = null, // zona do banner
 $rand = false,  // mostra os banners de forma aleatoria
 $template = 'agenciafmd/banners::frontend.default' //template utilizado para renderização
 ```
@@ -60,7 +60,7 @@ Caso seja necessário alguma modificação, publique o arquivo de config com o c
 php artisan vendor:publish --provider="Agenciafmd\Banners\Providers\BannerServiceProvider" --tag="config"
 ```
 
-Para mais de um local, adicione mais um item no `places` 
+Para mais de um local, adicione mais um item no `locations` 
 
 Para mais um formato, adicione mais um item no `items`
 
@@ -78,7 +78,7 @@ return [
         '-published_at',
         'name',
     ],
-    'places' => [
+    'locations' => [
         'home' => [
             'name' => 'Home',
             'html' => true,

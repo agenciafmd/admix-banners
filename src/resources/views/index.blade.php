@@ -16,7 +16,7 @@
         @include('agenciafmd/admix::partials.btn.back', ['url' => route('admix.banners.index')])
     @else
         @can('create', '\Agenciafmd\Banners\Banner')
-            @include('agenciafmd/admix::partials.btn.create', ['url' => route('admix.banners.create', ['place' => null]), 'label' => config('admix-banners.name')])
+            @include('agenciafmd/admix::partials.btn.create', ['url' => route('admix.banners.create', ['location' => null]), 'label' => config('admix-banners.name')])
         @endcan
         @can('restore', '\Agenciafmd\Banners\Banner')
             @include('agenciafmd/admix::partials.btn.trash', ['url' => route('admix.banners.trash')])
@@ -47,10 +47,10 @@
             ]) }}
     </div>
 
-    @if($bannerService->places()->count() > 1)
+    @if($bannerService->locations()->count() > 1)
         <h6 class="dropdown-header bg-gray-lightest p-2">Zona</h6>
         <div class="p-2">
-            {{ Form::select('filter[place]', collect(['' => '-'])->merge($bannerService->places()), filter('place'), ['class' => 'form-control form-control-sm']) }}
+            {{ Form::select('filter[location]', collect(['' => '-'])->merge($bannerService->locations()), filter('location'), ['class' => 'form-control form-control-sm']) }}
         </div>
     @endif
 @endsection
@@ -102,9 +102,9 @@
                                         <i class="icon fe-more-vertical text-muted"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.banners.show', [$item->id, $item->place])])
+                                        @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.banners.show', [$item->id, $item->location])])
                                         @can('update', '\Agenciafmd\Banners\Banner')
-                                            @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.banners.edit', [$item->id, $item->place])])
+                                            @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.banners.edit', [$item->id, $item->location])])
                                         @endcan
                                         @can('delete', '\Agenciafmd\Banners\Banner')
                                             @include('agenciafmd/admix::partials.btn.remove', ['url' => route('admix.banners.destroy', $item->id)])
@@ -136,7 +136,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{ Form::select('modalPlace', $bannerService->places(), null, ['id' => 'modalPlace', 'style' => 'width: 100%', 'class' => 'form-control']) }}
+                    {{ Form::select('modalLocation', $bannerService->locations(), null, ['id' => 'modalLocation', 'style' => 'width: 100%', 'class' => 'form-control']) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-action-continue">Continuar</button>
@@ -153,12 +153,12 @@
                 e.preventDefault();
                 var _this = $(this);
 
-                @if($bannerService->places()->count() == 1)
-                    window.location.href = _this.attr('href') + "/{{ $bannerService->places()->keys()->first() }}"
+                @if($bannerService->locations()->count() == 1)
+                    window.location.href = _this.attr('href') + "/{{ $bannerService->locations()->keys()->first() }}"
                 @else
                 $('#createModal').modal();
                 $('.btn-action-continue').on('click', function () {
-                    window.location.href = _this.attr('href') + '/' + $('#modalPlace').val()
+                    window.location.href = _this.attr('href') + '/' + $('#modalLocation').val()
                 })
                 @endif
             });

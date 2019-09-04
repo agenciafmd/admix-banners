@@ -2,35 +2,33 @@
 
 namespace Agenciafmd\Banners\ViewComponents;
 
-use Illuminate\Support\Facades\View;
-use Illuminate\Contracts\Support\Htmlable;
 use Agenciafmd\Banners\Banner;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\View;
 
 class BannerComponent implements Htmlable
 {
     protected $qty;
 
-    protected $place;
+    protected $location;
 
     protected $rand;
 
     protected $template;
 
-    public function __construct($qty = 4, $place = null, $rand = false, $template = 'agenciafmd/banners::frontend.default')
+    public function __construct($qty = 4, $location = null, $rand = false, $template = 'agenciafmd/banners::frontend.default')
     {
         $this->qty = $qty;
-        $this->place = $place;
+        $this->location = $location;
         $this->rand = $rand;
         $this->template = $template;
     }
 
     public function toHtml()
     {
-        // TODO: cache / troca place por location
+        $this->location = ($this->location === null) ? key(config('admix-banners.locations')) : $this->location;
 
-        $this->place = ($this->place === null) ? key(config('admix-banners.places')) : $this->place;
-
-        $query = Banner::where('place', $this->place)
+        $query = Banner::where('location', $this->location)
             ->isActive();
 
         if ($this->rand === true) {
@@ -41,7 +39,6 @@ class BannerComponent implements Htmlable
 
         $view['banners'] = $query->take($this->qty)
             ->get();
-        $view['slug'] = $this->place;
 
         return View::make($this->template)
             ->with($view)

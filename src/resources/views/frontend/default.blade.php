@@ -6,8 +6,10 @@ use o image($banner, 'desktop')->original para a imagem sem otimização
         @foreach($banners as $k => $banner)
             <div class="index">
                 <a @if($banner->link != '') href="{{ $banner->link }}" @endif target="{{ $banner->target }}" class="banner"
-                   @if (config("admix-banners.places.{$slug}.mobile") !== false) data-mobile="{{ image($banner, 'mobile')->name }}" @endif
-                   @if (config("admix-banners.places.{$slug}.tablet") !== false) data-tablet="{{ image($banner, 'tablet')->name }}" @endif
+                   @if (config("admix-banners.locations.{$slug}.mobile") !== false) data-mobile="{{ image($banner, 'mobile')->name }}"
+                   @endif
+                   @if (config("admix-banners.locations.{$slug}.tablet") !== false) data-tablet="{{ image($banner, 'tablet')->name }}"
+                   @endif
                    data-desktop="{{ image($banner, 'desktop')->name }}">
                 </a>
             </div>

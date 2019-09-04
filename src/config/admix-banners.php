@@ -10,7 +10,7 @@ return [
         '-published_at',
         'name',
     ],
-    'places' => [
+    'locations' => [
         'home' => [
             'name' => 'Home',
             'html' => false,

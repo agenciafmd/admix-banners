@@ -25,7 +25,7 @@
             {!! Form::bsText('Código', 'id', null, ['disabled' => true]) !!}
         @endif
 
-        {{ Form::hidden('place', request()->route()->parameter('place')) }}
+        {{ Form::hidden('location', request()->route()->parameter('location')) }}
 
         {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}
 
@@ -33,11 +33,11 @@
 
         {!! Form::bsText('Nome', 'name', null, ['required']) !!}
 
-        @foreach(config('admix-banners.places.' . request()->route()->parameter('place') . '.items') as $item => $size)
-            {!! Form::bsImage(ucfirst($item), $item, $model, ['config' => config('admix-banners.places.' . request()->route()->parameter('place') . '.items')]) !!}
+        @foreach(config('admix-banners.locations.' . request()->route()->parameter('location') . '.items') as $item => $size)
+            {!! Form::bsImage(ucfirst($item), $item, $model, ['config' => config('admix-banners.locations.' . request()->route()->parameter('location') . '.items')]) !!}
         @endforeach
 
-        @if(config('admix-banners.places.' . request()->route()->parameter('place') . '.html') == true)
+        @if(config('admix-banners.locations.' . request()->route()->parameter('location') . '.html') == true)
             {!! Form::bsTextareaPlain('Conteúdo HTML', 'description', optional($model)->description ?? null) !!}
         @endif
 

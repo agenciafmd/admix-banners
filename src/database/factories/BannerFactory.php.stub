@@ -6,7 +6,7 @@ $factory->define(Banner::class, function (\Faker\Generator $faker) {
     return [
         'is_active' => 1,
         'star' => 0,
-        'place' => key(config('admix-banners.places')),
+        'location' => key(config('admix-banners.locations')),
         'name' => ucfirst($faker->sentence()),
         'description' => null,
         'link' => $faker->url,

@@ -4,9 +4,9 @@ namespace Agenciafmd\Banners;
 
 use Agenciafmd\Admix\MediaTrait;
 use Carbon\Carbon;
-use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -69,7 +69,7 @@ class Banner extends Model implements AuditableContract, HasMedia
 
     public function registerMediaConversions(Media $media = null)
     {
-        $fields = config('admix-banners.places.' . $this->attributes['place'] . '.items');
+        $fields = config('admix-banners.locations.' . $this->attributes['location'] . '.items');
         foreach ($fields as $collection => $field) {
             $convertion = $this->addMediaConversion('thumb');
             if ($field['crop']) {
