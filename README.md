@@ -7,13 +7,13 @@
 
 ## Instalação
 
-```
+```shell script
 composer require agenciafmd/admix-banners:dev-master
 ```
 
 Execute a migração
 
-```
+```shell script
 php artisan migrate
 ```
 
@@ -21,7 +21,7 @@ php artisan migrate
 
 Caso seja necessário alguma modificação, publique o arquivo de config com o comando:
 
-```php
+```shell script
 php artisan vendor:publish --provider="Agenciafmd\Banners\Providers\BannerServiceProvider" --tag="config"
 ```
 
