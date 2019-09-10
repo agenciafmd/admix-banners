@@ -48,9 +48,6 @@
         {{ Form::bsDateTime('Exibir a partir de', 'published_at', optional(optional($model)->published_at)->format("Y-m-d\TH:i"), ['required']) }}
 
         {{ Form::bsDateTime('Exibir até', 'until_then', optional(optional($model)->until_then)->format("Y-m-d\TH:i")) }}
-
-
-{{--        {!! Form::bsImage('Imagem', 'image', $model) !!}--}}
     </ul>
     <div class="card-footer bg-gray-lightest text-right">
         <div class="d-flex">
