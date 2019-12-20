@@ -16,16 +16,16 @@ Route::prefix(config('admix.url') . '/banners')
         Route::get('trash', 'BannerController@index')
             ->name('trash')
             ->middleware('can:restore,\Agenciafmd\Banners\Banner');
-        Route::get('create/{location}', 'BannerController@create')
+        Route::get('create/{location?}', 'BannerController@create')
             ->name('create')
             ->middleware('can:create,\Agenciafmd\Banners\Banner');
         Route::post('', 'BannerController@store')
             ->name('store')
             ->middleware('can:create,\Agenciafmd\Banners\Banner');
-        Route::get('{banner}/{location}', 'BannerController@show')
+        Route::get('{banner}/{location?}', 'BannerController@show')
             ->name('show')
             ->middleware('can:view,\Agenciafmd\Banners\Banner');
-        Route::get('{banner}/edit/{location}', 'BannerController@edit')
+        Route::get('{banner}/edit/{location?}', 'BannerController@edit')
             ->name('edit')
             ->middleware('can:update,\Agenciafmd\Banners\Banner');
         Route::put('{banner}', 'BannerController@update')

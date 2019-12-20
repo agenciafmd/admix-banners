@@ -27,30 +27,31 @@
 @section('batch')
     @if(request()->is('*/trash'))
         @can('restore', '\Agenciafmd\Banners\Banner')
-            {{ Form::select('batch', ['' => 'com os selecionados', route('admix.banners.batchRestore') => '- restaurar'], null, ['class' => 'js-batch-select form-control custom-select']) }}
+            @inputSelect(['batch', ['' => 'com os selecionados', route('admix.banners.batchRestore') => '- restaurar'], null, ['class' => 'js-batch-select form-control custom-select']])
         @endcan
     @else
         @can('delete', '\Agenciafmd\Banners\Banner')
-            {{ Form::select('batch', ['' => 'com os selecionados', route('admix.banners.batchDestroy') => '- remover'], null, ['class' => 'js-batch-select form-control custom-select']) }}
+            @inputSelect(['batch', ['' => 'com os selecionados', route('admix.banners.batchDestroy') => '- remover'], null, ['class' => 'js-batch-select form-control custom-select']])
         @endcan
     @endif
 @endsection
 @section('filters')
     <h6 class="dropdown-header bg-gray-lightest p-2">Destaque</h6>
     <div class="p-2">
-        {{ Form::select('filter[star]', [
-                '' => '-',
-                '1' => 'Sim',
-                '0' => 'Não'
-            ], filter('star'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
+        @inputSelect(['filter[star]', [
+        '' => '-',
+        '1' => 'Sim',
+        '0' => 'Não'
+        ], filter('star'), [
+        'class' => 'form-control form-control-sm'
+        ]])
     </div>
 
     @if($bannerService->locations()->count() > 1)
         <h6 class="dropdown-header bg-gray-lightest p-2">Zona</h6>
         <div class="p-2">
-            {{ Form::select('filter[location]', collect(['' => '-'])->merge($bannerService->locations()), filter('location'), ['class' => 'form-control form-control-sm']) }}
+            @inputSelect(['filter[location]', collect(['' => '-'])->merge($bannerService->locations()),
+            filter('location'), ['class' => 'form-control form-control-sm']])
         </div>
     @endif
 @endsection
@@ -136,7 +137,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{ Form::select('modalLocation', $bannerService->locations(), null, ['id' => 'modalLocation', 'style' => 'width: 100%', 'class' => 'form-control']) }}
+                    @inputSelect(['modalLocation', $bannerService->locations(), null, ['id' => 'modalLocation', 'style'
+                    => 'width: 100%', 'class' => 'form-control']])
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-action-continue">Continuar</button>
