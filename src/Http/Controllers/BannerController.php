@@ -2,8 +2,8 @@
 
 namespace Agenciafmd\Banners\Http\Controllers;
 
-use Agenciafmd\Banners\Http\Requests\BannerRequest;
 use Agenciafmd\Banners\Banner;
+use Agenciafmd\Banners\Http\Requests\BannerRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -16,6 +16,7 @@ class BannerController extends Controller
 
         $query = QueryBuilder::for(Banner::class)
             ->defaultSorts(config('admix-banners.default_sort'))
+            ->allowedSorts($request->sort)
             ->allowedFilters((($request->filter) ? array_keys($request->get('filter')) : []));
 
         if ($request->is('*/trash')) {
