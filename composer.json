@@ -2,13 +2,10 @@
   "name": "agenciafmd/admix-banners",
   "description": "Banners - Agência F&MD",
   "homepage": "https://github.com/agenciafmd/admix-banners",
-  "keywords": [
-    "laravel",
-    "agenciafmd"
-  ],
+  "license": "MIT",
   "authors": [
     {
-      "name": "Irineu Martins Junior",
+      "name": "Irineu Junior",
       "email": "irineu@fmd.ag",
       "homepage": "https://fmd.ag/",
       "role": "Developer"
