@@ -16,7 +16,7 @@
         @include('agenciafmd/admix::partials.btn.back', ['url' => route('admix.banners.index')])
     @else
         @can('create', '\Agenciafmd\Banners\Banner')
-            @include('agenciafmd/admix::partials.btn.create', ['url' => route('admix.banners.create', ['location' => null]), 'label' => config('admix-banners.name')])
+            @include('agenciafmd/admix::partials.btn.create', ['url' => route('admix.banners.create'), 'label' => config('admix-banners.name')])
         @endcan
         @can('restore', '\Agenciafmd\Banners\Banner')
             @include('agenciafmd/admix::partials.btn.trash', ['url' => route('admix.banners.trash')])
