@@ -1,7 +1,7 @@
 @extends('agenciafmd/admix::partials.crud.form')
 
 @section('form')
-    @formModel(['model' => optional($model), 'create' => route('admix.banners.store'), 'update' => route('admix.banners.update', [($model->id) ?? 0]), 'id' => 'formCrud', 'class' => 'mb-0 card-list-group card' . ((count($errors) > 0) ? ' was-validated' : '')])
+    {!! Form::bsOpen(['model' => optional($model), 'create' => route('admix.banners.store'), 'update' => route('admix.banners.update', [$model->id])]) !!}
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">
             @if(request()->is('*/create'))
@@ -22,34 +22,32 @@
     <ul class="list-group list-group-flush">
 
         @if (optional($model)->id)
-            @formText(['Código', 'id', null, ['disabled' => true]])
+            {!! Form::bsText('Código', 'id', null, ['disabled' => true]) !!}
         @endif
 
-        @inputHidden(['location', request()->route()->parameter('location')])
+        {{ Form::hidden('location', request()->route()->parameter('location')) }}
 
-        @formIsActive(['Ativo', 'is_active', null, ['required']])
+        {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}
 
-        @formBoolean(['Destaque', 'star', null, ['required']])
+        {{ Form::bsBoolean('Destaque', 'star', null, ['required' => true]) }}
 
-        @formText(['Nome', 'name', null, ['required']])
+        {!! Form::bsText('Nome', 'name', null, ['required']) !!}
 
         @foreach(config('admix-banners.locations.' . request()->route()->parameter('location') . '.items') as $item => $size)
-            @formImage([ucfirst($item), $item, $model, ['config' => config('admix-banners.locations.' .
-            request()->route()->parameter('location') . '.items')]])
+            {!! Form::bsImage(ucfirst($item), $item, $model, ['config' => config('admix-banners.locations.' . request()->route()->parameter('location') . '.items')]) !!}
         @endforeach
 
         @if(config('admix-banners.locations.' . request()->route()->parameter('location') . '.html') == true)
-            @formTextareaPlain(['Conteúdo HTML', 'description', optional($model)->description ?? null])
+            {!! Form::bsTextareaPlain('Conteúdo HTML', 'description', optional($model)->description ?? null) !!}
         @endif
 
-        @formText(['Link', 'link', null])
+        {{ Form::bsText('Link', 'link', null) }}
 
-        @formSelect(['Abrir o link', 'target', ['' => '-', '_self' => 'na mesma página', '_blank' => 'em uma nova
-        janela'], null, ['required']])
+        {{ Form::bsSelect('Abrir o link', 'target', ['' => '-', '_self' => 'na mesma página', '_blank' => 'em uma nova janela'], null, ['required' => true]) }}
 
-        @formDatetime(['Exibir a partir de', 'published_at', null, ['required']])
+        {{ Form::bsDateTime('Exibir a partir de', 'published_at', optional(optional($model)->published_at)->format("Y-m-d\TH:i"), ['required']) }}
 
-        @formDatetime(['Exibir até', 'until_then', null])
+        {{ Form::bsDateTime('Exibir até', 'until_then', optional(optional($model)->until_then)->format("Y-m-d\TH:i")) }}
     </ul>
     <div class="card-footer bg-gray-lightest text-right">
         <div class="d-flex">
@@ -60,5 +58,5 @@
             @endif
         </div>
     </div>
-    @formClose()
+    {!! Form::close() !!}
 @endsection
