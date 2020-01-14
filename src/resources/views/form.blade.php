@@ -1,7 +1,7 @@
 @extends('agenciafmd/admix::partials.crud.form')
 
 @section('form')
-    {!! Form::bsOpen(['model' => optional($model), 'create' => route('admix.banners.store'), 'update' => route('admix.banners.update', ['banner' => ($model->id) ?? 0])]) !!}
+    {{ Form::bsOpen(['model' => optional($model), 'create' => route('admix.banners.store'), 'update' => route('admix.banners.update', ['banner' => ($model->id) ?? 0])]) }}
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">
             @if(request()->is('*/create'))
@@ -22,23 +22,23 @@
     <ul class="list-group list-group-flush">
 
         @if (optional($model)->id)
-            {!! Form::bsText('Código', 'id', null, ['disabled' => true]) !!}
+            {{ Form::bsText('Código', 'id', null, ['disabled' => true]) }}
         @endif
 
         {{ Form::hidden('location', request()->route()->parameter('location')) }}
 
-        {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}
+        {{ Form::bsIsActive('Ativo', 'is_active', null, ['required']) }}
 
         {{ Form::bsBoolean('Destaque', 'star', null, ['required' => true]) }}
 
-        {!! Form::bsText('Nome', 'name', null, ['required']) !!}
+        {{ Form::bsText('Nome', 'name', null, ['required']) }}
 
         @foreach(config('admix-banners.locations.' . request()->route()->parameter('location') . '.items') as $item => $size)
-            {!! Form::bsImage(ucfirst($item), $item, $model, ['config' => config('admix-banners.locations.' . request()->route()->parameter('location') . '.items')]) !!}
+            {{ Form::bsImage(ucfirst($item), $item, $model, ['config' => config('admix-banners.locations.' . request()->route()->parameter('location') . '.items')]) }}
         @endforeach
 
         @if(config('admix-banners.locations.' . request()->route()->parameter('location') . '.html') == true)
-            {!! Form::bsTextareaPlain('Conteúdo HTML', 'description', optional($model)->description ?? null) !!}
+            {{ Form::bsTextareaPlain('Conteúdo HTML', 'description', optional($model)->description ?? null) }}
         @endif
 
         {{ Form::bsText('Link', 'link', null) }}
@@ -58,5 +58,5 @@
             @endif
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ Form::close() }}
 @endsection
