@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class BannerRequest extends FormRequest
 {
+    protected $errorBag = 'admix';
+
     public function rules()
     {
         return [
