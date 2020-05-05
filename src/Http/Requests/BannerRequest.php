@@ -9,12 +9,12 @@ class BannerRequest extends FormRequest
     public function rules()
     {
         return [
-            'is_active' => 'required|boolean',
-            'star' => 'required|boolean',
-            'name' => 'required|max:150',
-            'published_at' => 'required|date_format:Y-m-d\TH:i',
-            'until_then' => 'nullable|date_format:Y-m-d\TH:i',
-            'media' => 'array|nullable',
+            'is_active' => ['required', 'boolean'],
+            'star' => ['required', 'boolean'],
+            'name' => ['required', 'max:150'],
+            'published_at' => ['required', 'date_format:Y-m-d\TH:i'],
+            'until_then' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'media' => ['array', 'nullable'],
         ];
     }
 
