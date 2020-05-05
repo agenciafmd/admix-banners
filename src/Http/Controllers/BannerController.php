@@ -37,7 +37,7 @@ class BannerController extends Controller
 
     public function store(BannerRequest $request)
     {
-        if (Banner::create($request->all())) {
+        if (Banner::create($request->validated())) {
             flash('Item inserido com sucesso.', 'success');
         } else {
             flash('Falha no cadastro.', 'danger');
@@ -62,7 +62,7 @@ class BannerController extends Controller
 
     public function update(Banner $banner, BannerRequest $request)
     {
-        if ($banner->update($request->all())) {
+        if ($banner->update($request->validated())) {
             flash('Item atualizado com sucesso.', 'success');
         } else {
             flash('Falha na atualização.', 'danger');

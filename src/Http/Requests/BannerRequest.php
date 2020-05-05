@@ -14,6 +14,7 @@ class BannerRequest extends FormRequest
             'name' => 'required|max:150',
             'published_at' => 'required|date_format:Y-m-d\TH:i',
             'until_then' => 'nullable|date_format:Y-m-d\TH:i',
+            'media' => 'array|nullable',
         ];
     }
 
