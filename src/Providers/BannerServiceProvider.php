@@ -2,6 +2,7 @@
 
 namespace Agenciafmd\Banners\Providers;
 
+use Agenciafmd\Banners\Banner;
 use Illuminate\Support\ServiceProvider;
 
 class BannerServiceProvider extends ServiceProvider
@@ -11,6 +12,8 @@ class BannerServiceProvider extends ServiceProvider
         $this->providers();
 
         $this->setMenu();
+
+        $this->setSearch();
 
         $this->loadViews();
 
@@ -45,6 +48,12 @@ class BannerServiceProvider extends ServiceProvider
                 'view' => 'agenciafmd/banners::partials.menus.item',
                 'ord' => config('admix-banners.sort', 1),
             ]);
+    }
+
+    protected function setSearch()
+    {
+        $this->app->make('admix-search')
+            ->registerModel(Banner::class, 'name');
     }
 
     protected function loadViews()

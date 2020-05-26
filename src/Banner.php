@@ -12,20 +12,41 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Banner extends Model implements AuditableContract, HasMedia
+class Banner extends Model implements AuditableContract, HasMedia, Searchable
 {
     use SoftDeletes, Auditable, HasMediaTrait, MediaTrait {
         MediaTrait::registerMediaConversions insteadof HasMediaTrait;
     }
 
     protected $dates = [
-        'published_at', 'until_then',
+        'published_at',
+        'until_then',
     ];
 
     protected $guarded = [
-        'media'
+        'media',
     ];
+
+    public $searchableType;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->searchableType = config('admix-banners.name');
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult(
+            $this,
+            "{$this->name} ({$this->email})",
+            route('admix.banners.edit', $this->id)
+        );
+    }
 
     public function setPublishedAtAttribute($value)
     {
