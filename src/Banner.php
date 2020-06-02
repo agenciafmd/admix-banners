@@ -43,7 +43,7 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
     {
         return new SearchResult(
             $this,
-            "{$this->name} ({$this->email})",
+            "{$this->name}",
             route('admix.banners.edit', $this->id)
         );
     }
