@@ -82,6 +82,24 @@ return [
         'home' => [
             'name' => 'Home',
             'html' => true,
+            'meta' => [
+                [
+                    'label' => 'tipo',
+                    'name' => 'type',
+                    'options' => [
+                        'Plantas Baixas',
+                        'Implantações',
+                    ],
+                ],
+                [
+                    'label' => 'título',
+                    'name' => 'title',
+                ],
+                [
+                    'label' => 'subtítulo',
+                    'name' => 'subtitle',
+                ],
+            ],
             'items' => [
                 'desktop' => [
                     'width' => 1920,

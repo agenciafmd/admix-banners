@@ -30,6 +30,10 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
         'media',
     ];
 
+    protected $casts = [
+        'meta' => 'array',
+    ];
+
     public $searchableType;
 
     public function __construct(array $attributes = [])

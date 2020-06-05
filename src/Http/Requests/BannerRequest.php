@@ -26,6 +26,23 @@ class BannerRequest extends FormRequest
                 'required',
                 'max:150',
             ],
+            'media' => [
+                'array',
+                'nullable',
+            ],
+            'meta' => [
+                'array',
+                'nullable',
+            ],
+            'description' => [
+                'nullable'
+            ],
+            'link' => [
+                'nullable'
+            ],
+            'target' => [
+                'nullable'
+            ],
             'published_at' => [
                 'required',
                 'date_format:Y-m-d\TH:i',
@@ -33,10 +50,6 @@ class BannerRequest extends FormRequest
             'until_then' => [
                 'nullable',
                 'date_format:Y-m-d\TH:i',
-            ],
-            'media' => [
-                'array',
-                'nullable',
             ],
         ];
     }
