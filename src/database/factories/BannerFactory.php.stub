@@ -13,5 +13,6 @@ $factory->define(Banner::class, function (\Faker\Generator $faker) {
         'target' => '_blank',
         'published_at' => now()->format('Y-m-d\TH:i'),
         'until_then' => null,
+        'meta' => [],
     ];
 });

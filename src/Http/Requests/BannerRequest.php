@@ -32,7 +32,6 @@ class BannerRequest extends FormRequest
             ],
             'meta' => [
                 'array',
-                'nullable',
             ],
             'description' => [
                 'nullable'
