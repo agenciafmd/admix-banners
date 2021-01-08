@@ -1,25 +1,23 @@
 <?php
 
-namespace Agenciafmd\Banners;
+namespace Agenciafmd\Banners\Models;
 
-use Agenciafmd\Admix\MediaTrait;
+use Database\Factories\BannerFactory;
+use Agenciafmd\Media\Traits\MediaTrait;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 class Banner extends Model implements AuditableContract, HasMedia, Searchable
 {
-    use SoftDeletes, Auditable, HasMediaTrait, MediaTrait {
-        MediaTrait::registerMediaConversions insteadof HasMediaTrait;
-    }
+    use SoftDeletes, HasFactory, Auditable, MediaTrait;
 
     protected $dates = [
         'published_at',
@@ -86,33 +84,17 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
         }
     }
 
-    /*
-     * Medialibrary convertions
-     * */
+    protected static function newFactory()
+    {
+        return BannerFactory::new();
+    }
 
     public $registerMediaConversionsUsingModelInstance = true;
 
-    public function registerMediaConversions(Media $media = null)
+    public function fieldsToConversion()
     {
-        $fields = config('admix-banners.locations.' . $this->attributes['location'] . '.items');
-        foreach ($fields as $collection => $field) {
-            $convertion = $this->addMediaConversion('thumb');
-            if ($field['crop']) {
-                $convertion->fit(Manipulations::FIT_CROP, $field['width'], $field['height']);
-            } else {
-                $convertion->width($field['width'])
-                    ->height($field['height']);
-            }
-            if (!app()->environment('local')) {
-                if ($field['optimize']) {
-                    $convertion->optimize();
-                }
-                if ($field['quality']) {
-                    $convertion->quality($field['quality']);
-                }
-            }
-            $convertion->performOnCollections($collection)
-                ->keepOriginalImageFormat();
-        }
+        $modelName = strtolower(class_basename($this));
+
+        return config("upload-configs.{$modelName}.{$this->attributes['location']}");
     }
 }

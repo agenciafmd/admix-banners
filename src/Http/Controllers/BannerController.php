@@ -2,10 +2,13 @@
 
 namespace Agenciafmd\Banners\Http\Controllers;
 
-use Agenciafmd\Banners\Banner;
+use Agenciafmd\Admix\Http\Filters\GreaterThanFilter;
+use Agenciafmd\Admix\Http\Filters\LowerThanFilter;
+use Agenciafmd\Banners\Models\Banner;
 use Agenciafmd\Banners\Http\Requests\BannerRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class BannerController extends Controller
@@ -17,7 +20,14 @@ class BannerController extends Controller
         $query = QueryBuilder::for(Banner::class)
             ->defaultSorts(config('admix-banners.default_sort'))
             ->allowedSorts($request->sort)
-            ->allowedFilters((($request->filter) ? array_keys($request->get('filter')) : []));
+            ->allowedFilters(array_merge((($request->filter) ? array_keys(array_diff_key($request->filter, array_flip(['id', 'is_active', 'star', 'location', 'published_at_gt', 'until_then_lt']))) : []), [
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('is_active'),
+                AllowedFilter::exact('star'),
+                AllowedFilter::exact('location'),
+                AllowedFilter::custom('published_at_gt', new GreaterThanFilter),
+                AllowedFilter::custom('until_then_lt', new LowerThanFilter),
+            ]));
 
         if ($request->is('*/trash')) {
             $query->onlyTrashed();

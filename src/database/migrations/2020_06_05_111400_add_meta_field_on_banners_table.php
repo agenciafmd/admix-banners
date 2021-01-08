@@ -8,7 +8,9 @@ class AddMetaFieldOnBannersTable extends Migration
     public function up()
     {
         Schema::table('banners', function (Blueprint $table) {
-            $table->json('meta');
+            $table->json('meta')
+                ->nullable()
+                ->after('description');
         });
     }
 

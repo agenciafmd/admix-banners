@@ -15,10 +15,10 @@
     @if(request()->is('*/trash'))
         @include('agenciafmd/admix::partials.btn.back', ['url' => route('admix.banners.index')])
     @else
-        @can('create', '\Agenciafmd\Banners\Banner')
+        @can('create', \Agenciafmd\Banners\Models\Banner::class)
             @include('agenciafmd/admix::partials.btn.create', ['url' => route('admix.banners.create'), 'label' => config('admix-banners.name')])
         @endcan
-        @can('restore', '\Agenciafmd\Banners\Banner')
+        @can('restore', \Agenciafmd\Banners\Models\Banner::class)
             @include('agenciafmd/admix::partials.btn.trash', ['url' => route('admix.banners.trash')])
         @endcan
     @endif
@@ -26,11 +26,11 @@
 
 @section('batch')
     @if(request()->is('*/trash'))
-        @can('restore', '\Agenciafmd\Banners\Banner')
+        @can('restore', \Agenciafmd\Banners\Models\Banner::class)
             {{ Form::select('batch', ['' => 'com os selecionados', route('admix.banners.batchRestore') => '- restaurar'], null, ['class' => 'js-batch-select form-control custom-select']) }}
         @endcan
     @else
-        @can('delete', '\Agenciafmd\Banners\Banner')
+        @can('delete', \Agenciafmd\Banners\Models\Banner::class)
             {{ Form::select('batch', ['' => 'com os selecionados', route('admix.banners.batchDestroy') => '- remover'], null, ['class' => 'js-batch-select form-control custom-select']) }}
         @endcan
     @endif
@@ -48,11 +48,24 @@
     </div>
 
     @if($bannerService->locations()->count() > 1)
-        <h6 class="dropdown-header bg-gray-lightest p-2">Zona</h6>
+        <h6 class="dropdown-header bg-gray-lightest p-2">Localização</h6>
         <div class="p-2">
             {{ Form::select('filter[location]', collect(['' => '-'])->merge($bannerService->locations()), filter('location'), ['class' => 'form-control form-control-sm']) }}
         </div>
     @endif
+
+    <h6 class="dropdown-header bg-gray-lightest p-2">A partir</h6>
+    <div class="p-2">
+        {{ Form::date('filter[published_at_gt]', filter('published_at_gt'), [
+                'class' => 'form-control form-control-sm'
+            ]) }}
+    </div>
+    <h6 class="dropdown-header bg-gray-lightest p-2">Até</h6>
+    <div class="p-2">
+        {{ Form::date('filter[until_then_lt]', filter('until_then_lt'), [
+                'class' => 'form-control form-control-sm'
+            ]) }}
+    </div>
 @endsection
 
 @section('table')
@@ -67,7 +80,7 @@
                     <th>{!! column_sort('A partir de', 'published_at') !!}</th>
                     <th>{!! column_sort('Exibir até', 'until_then') !!}</th>
                     <th>{!! column_sort('Destaque', 'star') !!}</th>
-                    <th>{!! column_sort('Status', 'is_active') !!}</th>
+                    <th class="px-0">{!! column_sort('Ativo', 'is_active') !!}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -88,8 +101,8 @@
                         <td>
                             @include('agenciafmd/admix::partials.label.star', ['star' => $item->star])
                         </td>
-                        <td>
-                            @include('agenciafmd/admix::partials.label.status', ['status' => $item->is_active])
+                        <td class="px-0">
+                            @livewire('admix::is-active', ['myModel' => get_class($item), 'myId' => $item->id])
                         </td>
                         @if(request()->is('*/trash'))
                             <td class="w-1 text-right">
@@ -102,11 +115,10 @@
                                         <i class="icon fe-more-vertical text-muted"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.banners.show', [$item->id, $item->location])])
-                                        @can('update', '\Agenciafmd\Banners\Banner')
+                                        @can('update', \Agenciafmd\Banners\Models\Banner::class)
                                             @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.banners.edit', [$item->id, $item->location])])
                                         @endcan
-                                        @can('delete', '\Agenciafmd\Banners\Banner')
+                                        @can('delete', \Agenciafmd\Banners\Models\Banner::class)
                                             @include('agenciafmd/admix::partials.btn.remove', ['url' => route('admix.banners.destroy', $item->id)])
                                         @endcan
                                     </div>
@@ -153,12 +165,12 @@
                 e.preventDefault();
                 var _this = $(this);
 
-                @if($bannerService->locations()->count() == 1)
-                    window.location.href = _this.attr('href') + "/{{ $bannerService->locations()->keys()->first() }}"
+                @if($bannerService->locations()->count() === 1)
+                    window.location.href = _this.attr('href').replace('/create', '{{ $bannerService->locations()->keys()->first() }}/create')
                 @else
                 $('#createModal').modal();
                 $('.btn-action-continue').on('click', function () {
-                    window.location.href = _this.attr('href') + '/' + $('#modalLocation').val()
+                    window.location.href = _this.attr('href').replace('/create', $('#modalLocation').val() + '/create')
                 })
                 @endif
             });

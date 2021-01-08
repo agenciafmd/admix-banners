@@ -1,18 +1,28 @@
 <?php
 
-use Agenciafmd\Banners\Banner;
+namespace Database\Factories;
 
-$factory->define(Banner::class, function (\Faker\Generator $faker) {
-    return [
-        'is_active' => 1,
-        'star' => 0,
-        'location' => key(config('admix-banners.locations')),
-        'name' => ucfirst($faker->sentence()),
-        'description' => null,
-        'link' => $faker->url,
-        'target' => '_blank',
-        'published_at' => now()->format('Y-m-d\TH:i'),
-        'until_then' => null,
-        'meta' => [],
-    ];
-});
+use Agenciafmd\Banners\Models\Banner;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class BannerFactory extends Factory
+{
+    protected $model = Banner::class;
+
+    public function definition()
+    {
+        return [
+            'is_active' => $this->faker->optional(0.3, 1)
+                ->randomElement([0]),
+            'star' => 0,
+            'location' => key(config('admix-banners.locations')),
+            'name' => ucfirst($this->faker->sentence()),
+            'description' => null,
+            'link' => $this->faker->url,
+            'target' => '_blank',
+            'published_at' => now()->format('Y-m-d\TH:i'),
+            'until_then' => null,
+            'meta' => [],
+        ];
+    }
+}

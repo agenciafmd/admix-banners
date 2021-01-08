@@ -7,11 +7,12 @@ class BannerService
     public function locations()
     {
         $array = [];
-        $locations = config('admix-banners.locations');
-        foreach ($locations as $slug => $location) {
-            $firstElement = collect($location['items'])->first();
+        $locations = config('upload-configs.banner');
+        foreach ($locations as $name => $location) {
+            $width = $location['desktop']['sources'][0]['width'];
+            $height = $location['desktop']['sources'][0]['height'];
 
-            $array[$slug] = "{$location['name']} ({$firstElement['width']}x{$firstElement['height']})";
+            $array[$name] = ucfirst($name) . " ({$width}x{$height})";
         }
 
         return collect($array);

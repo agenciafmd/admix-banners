@@ -2,7 +2,7 @@
 
 return [
     [
-        'name' => 'Banners',
+        'name' => config('admix-banners.name', 'Banners'),
         'policy' => '\Agenciafmd\Banners\Policies\BannerPolicy',
         'abilities' => [
             [

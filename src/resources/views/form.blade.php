@@ -14,9 +14,7 @@
             {{ config('admix-banners.name') }}
         </h3>
         <div class="card-options">
-            @if(strpos(request()->route()->getName(), 'show') === false)
-                @include('agenciafmd/admix::partials.btn.save')
-            @endif
+            @include('agenciafmd/admix::partials.btn.save')
         </div>
     </div>
     <ul class="list-group list-group-flush">
@@ -33,8 +31,8 @@
 
         {{ Form::bsText('Nome', 'name', null, ['required']) }}
 
-        @foreach(config('admix-banners.locations.' . request()->route()->parameter('location') . '.items') as $item => $size)
-            {{ Form::bsImage(ucfirst($item), $item, $model, ['config' => config('admix-banners.locations.' . request()->route()->parameter('location') . '.items')]) }}
+        @foreach(config('upload-configs.banner.' . (($model->location) ?? request()->route()->parameter('location'))) as $item => $size)
+            {{ Form::bsImage(ucfirst($item), $item, $model, ['config' => $size['sources'][0]]) }}
         @endforeach
 
         @if(config('admix-banners.locations.' . request()->route()->parameter('location') . '.html') == true)
@@ -64,10 +62,7 @@
     <div class="card-footer bg-gray-lightest text-right">
         <div class="d-flex">
             @include('agenciafmd/admix::partials.btn.back')
-
-            @if(strpos(request()->route()->getName(), 'show') === false)
-                @include('agenciafmd/admix::partials.btn.save')
-            @endif
+            @include('agenciafmd/admix::partials.btn.save')
         </div>
     </div>
     {{ Form::close() }}

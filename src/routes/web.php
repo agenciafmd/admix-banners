@@ -1,46 +1,35 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| ADMIX Routes
-|--------------------------------------------------------------------------
-*/
+use Agenciafmd\Banners\Http\Controllers\BannerController;
+use Agenciafmd\Banners\Models\Banner;
 
-Route::prefix(config('admix.url') . '/banners')
-    ->name('admix.banners.')
-    ->middleware(['auth:admix-web'])
-    ->group(function () {
-        Route::get('', 'BannerController@index')
-            ->name('index')
-            ->middleware('can:view,\Agenciafmd\Banners\Banner');
-        Route::get('trash', 'BannerController@index')
-            ->name('trash')
-            ->middleware('can:restore,\Agenciafmd\Banners\Banner');
-        Route::get('create/{location?}', 'BannerController@create')
-            ->name('create')
-            ->middleware('can:create,\Agenciafmd\Banners\Banner');
-        Route::post('', 'BannerController@store')
-            ->name('store')
-            ->middleware('can:create,\Agenciafmd\Banners\Banner');
-        Route::get('{banner}/{location?}', 'BannerController@show')
-            ->name('show')
-            ->middleware('can:view,\Agenciafmd\Banners\Banner');
-        Route::get('{banner}/edit/{location?}', 'BannerController@edit')
-            ->name('edit')
-            ->middleware('can:update,\Agenciafmd\Banners\Banner');
-        Route::put('{banner}', 'BannerController@update')
-            ->name('update')
-            ->middleware('can:update,\Agenciafmd\Banners\Banner');
-        Route::delete('destroy/{banner}', 'BannerController@destroy')
-            ->name('destroy')
-            ->middleware('can:delete,\Agenciafmd\Banners\Banner');
-        Route::post('{id}/restore', 'BannerController@restore')
-            ->name('restore')
-            ->middleware('can:restore,\Agenciafmd\Banners\Banner');
-        Route::post('batchDestroy', 'BannerController@batchDestroy')
-            ->name('batchDestroy')
-            ->middleware('can:delete,\Agenciafmd\Banners\Banner');
-        Route::post('batchRestore', 'BannerController@batchRestore')
-            ->name('batchRestore')
-            ->middleware('can:restore,\Agenciafmd\Banners\Banner');
-    });
+Route::get('banners', [BannerController::class, 'index'])
+    ->name('admix.banners.index')
+    ->middleware('can:view,' . Banner::class);
+Route::get('banners/trash', [BannerController::class, 'index'])
+    ->name('admix.banners.trash')
+    ->middleware('can:restore,' . Banner::class);
+Route::get('banners/{location?}/create', [BannerController::class, 'create'])
+    ->name('admix.banners.create')
+    ->middleware('can:create,' . Banner::class);
+Route::post('banners', [BannerController::class, 'store'])
+    ->name('admix.banners.store')
+    ->middleware('can:create,' . Banner::class);
+Route::get('banners/{banner}/edit', [BannerController::class, 'edit'])
+    ->name('admix.banners.edit')
+    ->middleware('can:update,' . Banner::class);
+Route::put('banners/{banner}', [BannerController::class, 'update'])
+    ->name('admix.banners.update')
+    ->middleware('can:update,' . Banner::class);
+Route::delete('banners/destroy/{banner}', [BannerController::class, 'destroy'])
+    ->name('admix.banners.destroy')
+    ->middleware('can:delete,' . Banner::class);
+Route::post('banners/{id}/restore', [BannerController::class, 'restore'])
+    ->name('admix.banners.restore')
+    ->middleware('can:restore,' . Banner::class);
+Route::post('banners/batchDestroy', [BannerController::class, 'batchDestroy'])
+    ->name('admix.banners.batchDestroy')
+    ->middleware('can:delete,' . Banner::class);
+Route::post('banners/batchRestore', [BannerController::class, 'batchRestore'])
+    ->name('admix.banners.batchRestore')
+    ->middleware('can:restore,' . Banner::class);

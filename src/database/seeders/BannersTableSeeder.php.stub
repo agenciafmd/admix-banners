@@ -1,34 +1,41 @@
 <?php
 
-use Agenciafmd\Banners\Banner;
+namespace Database\Seeders;
+
+use Agenciafmd\Banners\Models\Banner;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory;
 
 class BannersTableSeeder extends Seeder
 {
-    protected $total = 1;
+    protected int $total = 3;
 
     public function run()
     {
-        Banner::withTrashed()->get()->each->forceDelete();
+        Banner::query()
+            ->truncate();
 
         DB::table('media')
-            ->where('model_type', 'Agenciafmd\\Banners\\Banner')
+            ->where('model_type', 'Agenciafmd\\Banners\\Models\\Banner')
             ->delete();
 
-        $faker = Faker\Factory::create('pt_BR');
+        $faker = Factory::create('pt_BR');
 
         $this->command->getOutput()
             ->progressStart($this->total);
-        factory(Banner::class, $this->total)
+
+        Banner::factory($this->total)
             ->create()
             ->each(function ($banner) use ($faker) {
                 $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/desktop', storage_path('admix/tmp')), 'desktop');
-                $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/tablet', storage_path('admix/tmp')), 'tablet');
+                $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/notebook', storage_path('admix/tmp')), 'notebook');
                 $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/mobile', storage_path('admix/tmp')), 'mobile');
+
                 $this->command->getOutput()
                     ->progressAdvance();
             });
+
         $this->command->getOutput()
             ->progressFinish();
     }

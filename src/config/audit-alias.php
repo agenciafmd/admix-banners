@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'Agenciafmd\Banners\Banner' => 'Banners',
+    'Agenciafmd\Banners\Models\Banner' => config('admix-banners.name', 'Banners'),
 ];

@@ -1,5 +1,7 @@
 ## F&MD - Banners
 
+![Área Administrativa](https://github.com/agenciafmd/admix-banners/raw/master/docs/screenshot.png "Área Administrativa")
+
 [![Downloads](https://img.shields.io/packagist/dt/agenciafmd/admix-banners.svg?style=flat-square)](https://packagist.org/packages/agenciafmd/admix-banners)
 [![Licença](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 
@@ -17,54 +19,48 @@ Execute a migração
 php artisan migrate
 ```
 
+Se precisar do seed, faça a publicação
+
+```
+php artisan vendor:publish --tag=admix-banners:seeds
+```
+
+**Não esqueça**
+
+- de trocar os banners em `database/faker/banners` para que o projeto fique belo
+- de adicionar o `BannersTableSeeder::class` em `database/seeders/DatabaseSeeder.php`
+- de executar o `composer dumpautoload`
+
 ## Uso
 
-O componente utilizado para renderizar o banner, é o `\Agenciafmd\Banners\ViewComponents\BannerComponent::class`
+Chame o componente `<x-banner />`
 
-A chamada feita é:
+A configuração padrão é
 
-```blade
-@render(\Agenciafmd\Banners\ViewComponents\BannerComponent::class, [
-    ...
-])
+```html
+
+<x-banner quantity=4
+          location='home'
+          random=false
+          template='agenciafmd/banners::components.home'
+/>
 ```
 
-Os valores padrões são:
-
-```
-$qty = 4, // quantidade de itens que vamos mostrar
-$location = null, // zona do banner
-$rand = false,  // mostra os banners de forma aleatoria
-$template = 'agenciafmd/banners::frontend.default' //template utilizado para renderização
-```
-
-
-
-## Seed
-
-Para utlizar o seed do pacote, faça a publicação com o comando abaixo:
-
-```shell script
-php artisan vendor:publish --provider="Agenciafmd\Banners\Providers\BannerServiceProvider" --tag="seed" && composer dumpautoload
-```
-
-Faça a troca dos banners em `database/faker/banners` para que o projeto fique belo
-
-**Não esqueça** de adicionar o `BannersTableSeeder::class` em `database/seeds/DatabaseSeeder.php`
+Se for preciso alguma customização da listagem dos banners, crie o blade do component no namespace do frontend
 
 ## Configurações
 
 Caso seja necessário alguma modificação, publique o arquivo de config com o comando:
 
 ```shell script
-php artisan vendor:publish --provider="Agenciafmd\Banners\Providers\BannerServiceProvider" --tag="config"
+php artisan vendor:publish --tag=admix-banners:config
 ```
 
-Para mais de um local, adicione mais um item no `locations` 
-
-Para mais um formato, adicione mais um item no `items`
+Para mais de um local, adicione mais um item no `locations` em `admix-banners.php` e configure os tamanhos
+em `upload-configs.php`
 
 Ex.
+
 ```php
 <?php
 
@@ -100,24 +96,55 @@ return [
                     'name' => 'subtitle',
                 ],
             ],
-            'items' => [
-                'desktop' => [
-                    'width' => 1920,
-                    'height' => 850,
-                    'quality' => 95,
-                    'crop' => true,
+        ],
+        ...
+    ],
+];
+```
+
+Para mais um formato, adicione mais um item no `banner`
+
+```php
+<?php
+
+return [
+    'banner' => [
+        'home' => [
+            'desktop' => [
+                'label' => 'desktop',
+                'sources' => [
+                    [
+                        'conversion' => 'desktop',
+                        'media' => '(min-width: 1600px)',
+                        'width' => 1920 * 2,
+                        'height' => 850 * 2,
+                    ],
                 ],
-                ...
-                'mobile' => [
-                    'width' => 375,
-                    'height' => 600,
-                    'quality' => 95,
-                    'crop' => true,
+            ],
+            'notebook' => [
+                'label' => 'notebook',
+                'sources' => [
+                    [
+                        'conversion' => 'notebook',
+                        'media' => '(min-width: 1024px)',
+                        'width' => 1366 * 2,
+                        'height' => 605 * 2,
+                    ],
+                ],
+            ],
+            'mobile' => [
+                'label' => 'mobile',
+                'sources' => [
+                    [
+                        'conversion' => 'mobile',
+                        'media' => '(max-width: 1023px)',
+                        'width' => 375 * 2,
+                        'height' => 600 * 2,
+                    ],
                 ],
             ],
         ],
         ...
     ],
 ];
-
 ```
