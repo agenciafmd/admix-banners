@@ -1,8 +1,8 @@
-@can('view', '\Agenciafmd\Banners\Banner')
+@can('view', \Agenciafmd\Banners\Models\Banner::class)
     <li class="nav-item">
-        <a class="nav-link {{ (admix_is_active(route('admix.banners.index'))) ? 'active' : '' }}"
+        <a class="nav-link  {{ (Str::startsWith(request()->route()->getName(), 'admix.banners')) ? 'active' : '' }}"
            href="{{ route('admix.banners.index') }}"
-           aria-expanded="{{ (admix_is_active(route('admix.banners.index'))) ? 'true' : 'false' }}">
+           aria-expanded=" {{ (Str::startsWith(request()->route()->getName(), 'admix.banners')) ? 'true' : 'false' }}">
         <span class="nav-icon">
             <i class="icon {{ config('admix-banners.icon') }}"></i>
         </span>
