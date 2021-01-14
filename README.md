@@ -9,19 +9,19 @@
 
 ## Instalação
 
-```shell script
+```bash
 composer require agenciafmd/admix-banners:dev-master
 ```
 
 Execute a migração
 
-```shell script
+```bash
 php artisan migrate
 ```
 
 Se precisar do seed, faça a publicação
 
-```
+```bash
 php artisan vendor:publish --tag=admix-banners:seeds
 ```
 
@@ -52,7 +52,7 @@ Se for preciso alguma customização da listagem dos banners, crie o blade do co
 
 Caso seja necessário alguma modificação, publique o arquivo de config com o comando:
 
-```shell script
+```bash
 php artisan vendor:publish --tag=admix-banners:config
 ```
 
