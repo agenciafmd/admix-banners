@@ -35,16 +35,16 @@
             {{ Form::bsImage(ucfirst($item), $item, $model, ['config' => $size['sources'][0]]) }}
         @endforeach
 
-        @if(config('admix-banners.locations.' . request()->route()->parameter('location') . '.html') == true)
-            {{ Form::bsTextareaPlain('Conteúdo HTML', 'description', optional($model)->description ?? null) }}
+        @if(config('admix-banners.locations.' . (($model->location) ?? request()->route()->parameter('location')) . '.html') == true)
+            {{ Form::bsTextarea('Conteúdo HTML', 'description', optional($model)->description ?? null) }}
         @endif
 
-        @if(config('admix-banners.locations.' . request()->route()->parameter('location') . '.meta'))
-            @foreach (config('admix-banners.locations.' . request()->route()->parameter('location') . '.meta') as $field)
+        @if(config('admix-banners.locations.' . (($model->location) ?? request()->route()->parameter('location')) . '.meta'))
+            @foreach (config('admix-banners.locations.' . (($model->location) ?? request()->route()->parameter('location')) . '.meta') as $field)
                 @if (isset($field['options']) && is_array($field['options']))
-                    {{ Form::bsSelect($field['label'], "meta[{$field['name']}]", ['' => '-'] + $field['options'], null) }}
+                    {{ Form::bsSelect($field['label'], "meta['{$field['name']}']", ['' => '-'] + $field['options'], $model->meta[$field['name']]) }}
                 @else
-                    {{ Form::bsText($field['label'], "meta[{$field['name']}]", null) }}
+                    {{ Form::bsText($field['label'], "meta['{$field['name']}']", $model->meta[$field['name']]) }}
                 @endif
             @endforeach
         @else
