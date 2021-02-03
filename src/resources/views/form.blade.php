@@ -42,9 +42,9 @@
         @if(config('admix-banners.locations.' . (($model->location) ?? request()->route()->parameter('location')) . '.meta'))
             @foreach (config('admix-banners.locations.' . (($model->location) ?? request()->route()->parameter('location')) . '.meta') as $field)
                 @if (isset($field['options']) && is_array($field['options']))
-                    {{ Form::bsSelect($field['label'], "meta['{$field['name']}']", ['' => '-'] + $field['options'], $model->meta[$field['name']]) }}
+                    {{ Form::bsSelect($field['label'], "meta[{$field['name']}]", ['' => '-'] + $field['options'], ($model->meta) ? $model->meta[$field['name']] : null) }}
                 @else
-                    {{ Form::bsText($field['label'], "meta['{$field['name']}']", $model->meta[$field['name']]) }}
+                    {{ Form::bsText($field['label'], "meta[{$field['name']}]", ($model->meta) ? $model->meta[$field['name']] : null) }}
                 @endif
             @endforeach
         @else
