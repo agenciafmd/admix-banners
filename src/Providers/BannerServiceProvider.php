@@ -3,6 +3,7 @@
 namespace Agenciafmd\Banners\Providers;
 
 use Agenciafmd\Banners\Models\Banner;
+use Agenciafmd\Banners\Observers\BannerObserver;
 use Illuminate\Support\ServiceProvider;
 
 class BannerServiceProvider extends ServiceProvider
@@ -10,6 +11,8 @@ class BannerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->providers();
+
+        $this->setObservers();
 
         $this->setSearch();
 
@@ -34,6 +37,11 @@ class BannerServiceProvider extends ServiceProvider
     {
         $this->app->make('admix-search')
             ->registerModel(Banner::class, 'name');
+    }
+
+    protected function setObservers()
+    {
+        Banner::observe(BannerObserver::class);
     }
 
     protected function loadMigrations()
