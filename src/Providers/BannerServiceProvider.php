@@ -51,7 +51,7 @@ class BannerServiceProvider extends ServiceProvider
             __DIR__ . '/../database/factories/BannerFactory.php.stub' => base_path('database/factories/BannerFactory.php'),
             __DIR__ . '/../database/faker' => base_path('database/faker'),
             __DIR__ . '/../database/seeders/BannersTableSeeder.php.stub' => base_path('database/seeders/BannersTableSeeder.php'),
-        ], 'admix-banners:seeds');
+        ], 'admix-banners:seeders');
     }
 
     protected function loadConfigs()

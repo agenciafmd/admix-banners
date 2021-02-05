@@ -22,7 +22,7 @@ php artisan migrate
 Se precisar do seed, faça a publicação
 
 ```bash
-php artisan vendor:publish --tag=admix-banners:seeds
+php artisan vendor:publish --tag=admix-banners:seeders
 ```
 
 **Não esqueça**
