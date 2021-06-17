@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Banners\Models;
 
-use Database\Factories\BannerFactory;
+use Agenciafmd\Banners\Database\Factories\BannerFactory;
 use Agenciafmd\Media\Traits\MediaTrait;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -83,6 +83,10 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
 
     protected static function newFactory()
     {
+        if (class_exists(\Database\Seeders\BannerFactory::class)) {
+            return \Database\Seeders\BannerFactory::new();
+        }
+
         return BannerFactory::new();
     }
 

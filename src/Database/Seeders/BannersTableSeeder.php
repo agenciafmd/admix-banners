@@ -1,11 +1,13 @@
 <?php
 
-namespace Database\Seeders;
+namespace Agenciafmd\Banners\Database\Seeders;
 
 use Agenciafmd\Banners\Models\Banner;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Faker\Factory;
+use Illuminate\Database\Seeder;
+use Illuminate\Http\File as HttpFile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BannersTableSeeder extends Seeder
 {
@@ -28,9 +30,17 @@ class BannersTableSeeder extends Seeder
         Banner::factory($this->total)
             ->create()
             ->each(function ($banner) use ($faker) {
-                $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/desktop', storage_path('admix/tmp')), 'desktop');
-                $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/notebook', storage_path('admix/tmp')), 'notebook');
-                $banner->doUpload($faker->file(__DIR__ . '/../faker/banners/mobile', storage_path('admix/tmp')), 'mobile');
+                collect(['desktop', 'notebook', 'mobile'])->each(function($type) use ($faker, $banner) {
+                    $fakerDir = __DIR__ . "/../Faker/banners/{$type}";
+                    if(file_exists(base_path("database/faker/banners/{$type}"))) {
+                        $fakerDir = base_path("database/faker/banners/{$type}");
+                    }
+
+                    $sourceFile = $faker->file($fakerDir, storage_path('admix/tmp'));
+                    $targetFile = Storage::putFile('tmp', new HttpFile($sourceFile));
+
+                    $banner->doUploadMultiple($targetFile, $type);
+                });
 
                 $this->command->getOutput()
                     ->progressAdvance();

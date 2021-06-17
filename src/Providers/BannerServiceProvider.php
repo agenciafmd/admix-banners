@@ -46,19 +46,25 @@ class BannerServiceProvider extends ServiceProvider
 
     protected function loadMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     protected function publish()
     {
         $this->publishes([
-            __DIR__ . '/../config/admix-banners.php' => base_path('config/admix-banners.php'),
-        ], 'admix-banners:config');
+            __DIR__ . '/../Database/Faker' => base_path('database/faker'),
+            __DIR__ . '/../config/upload-configs.php' => base_path('config/upload-configs.php'),
+        ], 'admix-banners:minimal');
 
         $this->publishes([
-            __DIR__ . '/../database/factories/BannerFactory.php.stub' => base_path('database/factories/BannerFactory.php'),
-            __DIR__ . '/../database/faker' => base_path('database/faker'),
-            __DIR__ . '/../database/seeders/BannersTableSeeder.php.stub' => base_path('database/seeders/BannersTableSeeder.php'),
+            __DIR__ . '/../config/admix-banners.php' => base_path('config/admix-banners.php'),
+            __DIR__ . '/../config/upload-configs.php' => base_path('config/upload-configs.php'),
+        ], 'admix-banners:configs');
+
+        $this->publishes([
+            __DIR__ . '/../Database/Factories/BannerFactory.php' => base_path('database/factories/BannerFactory.php'),
+            __DIR__ . '/../Database/Faker' => base_path('database/faker'),
+            __DIR__ . '/../Database/Seeders/BannersTableSeeder.php' => base_path('database/seeders/BannersTableSeeder.php'),
         ], 'admix-banners:seeders');
     }
 

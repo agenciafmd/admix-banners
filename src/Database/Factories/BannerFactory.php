@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Agenciafmd\Banners\Database\Factories;
 
 use Agenciafmd\Banners\Models\Banner;
 use Illuminate\Database\Eloquent\Factories\Factory;

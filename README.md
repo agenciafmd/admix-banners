@@ -19,7 +19,20 @@ Execute a migração
 php artisan migrate
 ```
 
-Se precisar do seed, faça a publicação
+O jeito mais prático para customizar os banners, é publicar: 
+
+```
+config/upload-configs.php
+database/faker/banners/*
+```
+
+Para isso, usaremos.
+
+```bash
+php artisan vendor:publish --tag=admix-banners:minimal
+```
+
+Para uma customização mais forte, execute:
 
 ```bash
 php artisan vendor:publish --tag=admix-banners:seeders
@@ -53,7 +66,7 @@ Se for preciso alguma customização da listagem dos banners, crie o blade do co
 Caso seja necessário alguma modificação, publique o arquivo de config com o comando:
 
 ```bash
-php artisan vendor:publish --tag=admix-banners:config
+php artisan vendor:publish --tag=admix-banners:configs
 ```
 
 Para mais de um local, adicione mais um item no `locations` em `admix-banners.php` e configure os tamanhos
