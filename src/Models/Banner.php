@@ -19,17 +19,14 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
 {
     use SoftDeletes, HasFactory, Auditable, MediaTrait;
 
-    protected $dates = [
-        'published_at',
-        'until_then',
-    ];
-
     protected $guarded = [
         'media',
     ];
 
     protected $casts = [
         'meta' => 'array',
+        'published_at' => 'datetime',
+        'until_then' => 'datetime',
     ];
 
     public $searchableType;
