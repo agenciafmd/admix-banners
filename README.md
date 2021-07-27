@@ -54,7 +54,7 @@ A configuração padrão é
 
 <x-banner quantity=4
           location='home'
-          random=false
+          :random=false
           template='agenciafmd/banners::components.home'
 />
 ```
