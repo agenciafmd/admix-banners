@@ -83,8 +83,8 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
 
     protected static function newFactory()
     {
-        if (class_exists(\Database\Seeders\BannerFactory::class)) {
-            return \Database\Seeders\BannerFactory::new();
+        if (class_exists(\Database\Factories\BannerFactory::class)) {
+            return \Database\Factories\BannerFactory::new();
         }
 
         return BannerFactory::new();
