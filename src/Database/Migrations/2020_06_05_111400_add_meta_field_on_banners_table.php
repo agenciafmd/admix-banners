@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 class AddMetaFieldOnBannersTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::table('banners', function (Blueprint $table) {
             $table->json('meta')
@@ -14,7 +14,7 @@ class AddMetaFieldOnBannersTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::table('banners', function (Blueprint $table) {
             $table->dropColumn('meta');

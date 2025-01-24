@@ -3,6 +3,7 @@
 namespace Agenciafmd\Banners\Http\Components;
 
 use Agenciafmd\Banners\Models\Banner as BannerModel;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Banner extends Component
@@ -28,7 +29,7 @@ class Banner extends Component
         $this->template = $template;
     }
 
-    public function render()
+    public function render(): View
     {
         $query = BannerModel::query()
             ->where('location', $this->location)

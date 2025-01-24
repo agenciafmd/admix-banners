@@ -13,7 +13,7 @@ class BannersTableSeeder extends Seeder
 {
     protected int $total = 3;
 
-    public function run()
+    public function run(): void
     {
         Banner::query()
             ->truncate();

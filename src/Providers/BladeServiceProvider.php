@@ -3,12 +3,12 @@
 namespace Agenciafmd\Banners\Providers;
 
 use Agenciafmd\Banners\Http\Components\Banner;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 
 class BladeServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->loadBladeComponents();
 
@@ -25,27 +25,27 @@ class BladeServiceProvider extends ServiceProvider
         $this->publish();
     }
 
-    public function register()
+    public function register(): void
     {
         //
     }
 
-    protected function loadBladeComponents()
+    protected function loadBladeComponents(): void
     {
         Blade::component('banner', Banner::class);
     }
 
-    protected function loadBladeComposers()
+    protected function loadBladeComposers(): void
     {
         //
     }
 
-    protected function loadBladeDirectives()
+    protected function loadBladeDirectives(): void
     {
         //
     }
 
-    protected function setMenu()
+    protected function setMenu(): void
     {
         $this->app->make('admix-menu')
             ->push((object)[
@@ -54,17 +54,17 @@ class BladeServiceProvider extends ServiceProvider
             ]);
     }
 
-    protected function loadViews()
+    protected function loadViews(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'agenciafmd/banners');
     }
 
-    protected function loadTranslations()
+    protected function loadTranslations(): void
     {
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'agenciafmd/banners');
     }
 
-    protected function publish()
+    protected function publish(): void
     {
         $this->publishes([
             __DIR__ . '/../resources/views/frontend' => base_path('resources/views/vendor/agenciafmd/banners/frontend'),

@@ -10,7 +10,7 @@
 ## Instalação
 
 ```bash
-composer require agenciafmd/admix-banners:dev-master
+composer require agenciafmd/admix-banners:v8.x-dev
 ```
 
 Execute a migração

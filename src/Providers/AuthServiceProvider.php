@@ -12,7 +12,7 @@ class AuthServiceProvider extends ServiceProvider
         Banner::class => BannerPolicy::class,
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->registerPolicies();
     }

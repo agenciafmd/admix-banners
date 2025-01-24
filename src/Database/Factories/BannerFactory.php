@@ -9,7 +9,7 @@ class BannerFactory extends Factory
 {
     protected $model = Banner::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'is_active' => $this->faker->optional(0.3, 1)

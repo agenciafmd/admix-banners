@@ -4,10 +4,10 @@ namespace Agenciafmd\Banners\Models;
 
 use Agenciafmd\Banners\Database\Factories\BannerFactory;
 use Agenciafmd\Media\Traits\MediaTrait;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\MediaLibrary\HasMedia;
@@ -47,13 +47,13 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
         );
     }
 
-    public function setPublishedAtAttribute($value)
+    public function setPublishedAtAttribute($value): void
     {
         $this->attributes['published_at'] = Carbon::createFromFormat('Y-m-d\TH:i', $value)
             ->format('Y-m-d H:i:s');
     }
 
-    public function setUntilThenAttribute($value)
+    public function setUntilThenAttribute($value): void
     {
         $this->attributes['until_then'] = null;
         if ($value) {
@@ -62,7 +62,7 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
         }
     }
 
-    public function scopeIsActive($query)
+    public function scopeIsActive($query): void
     {
         $query->where('is_active', 1)
             ->where('published_at', '<=', Carbon::now())
@@ -72,7 +72,7 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
             });
     }
 
-    public function scopeSort($query)
+    public function scopeSort($query): void
     {
         $sorts = default_sort(config("admix-banners.default_sort"));
 
@@ -81,7 +81,7 @@ class Banner extends Model implements AuditableContract, HasMedia, Searchable
         }
     }
 
-    protected static function newFactory()
+    protected static function newFactory(): BannerFactory|\Database\Factories\BannerFactory
     {
         if (class_exists(\Database\Factories\BannerFactory::class)) {
             return \Database\Factories\BannerFactory::new();

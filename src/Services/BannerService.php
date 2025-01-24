@@ -2,9 +2,11 @@
 
 namespace Agenciafmd\Banners\Services;
 
+use Illuminate\Support\Collection;
+
 class BannerService
 {
-    public function locations()
+    public function locations(): Collection
     {
         $array = [];
         $locations = config('upload-configs.banner');

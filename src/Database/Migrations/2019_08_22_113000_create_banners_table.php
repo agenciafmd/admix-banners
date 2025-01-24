@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBannersTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->increments('id');
@@ -30,7 +30,7 @@ class CreateBannersTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('banners');
     }

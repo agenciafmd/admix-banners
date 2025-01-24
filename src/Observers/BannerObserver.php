@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class BannerObserver
 {
-    public function saved(Banner $model)
+    public function saved(Banner $model): void
     {
         if (!app()->runningInConsole()) {
             try {

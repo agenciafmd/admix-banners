@@ -4,16 +4,18 @@ namespace Agenciafmd\Banners\Http\Controllers;
 
 use Agenciafmd\Admix\Http\Filters\GreaterThanFilter;
 use Agenciafmd\Admix\Http\Filters\LowerThanFilter;
-use Agenciafmd\Banners\Models\Banner;
 use Agenciafmd\Banners\Http\Requests\BannerRequest;
+use Agenciafmd\Banners\Models\Banner;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class BannerController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         session()->put('backUrl', request()->fullUrl());
 
@@ -38,14 +40,14 @@ class BannerController extends Controller
         return view('agenciafmd/banners::index', $view);
     }
 
-    public function create(Banner $banner)
+    public function create(Banner $banner): View
     {
         $view['model'] = $banner;
 
         return view('agenciafmd/banners::form', $view);
     }
 
-    public function store(BannerRequest $request)
+    public function store(BannerRequest $request): RedirectResponse
     {
         if (Banner::create($request->validated())) {
             flash('Item inserido com sucesso.', 'success');
@@ -56,21 +58,21 @@ class BannerController extends Controller
         return ($url = session()->get('backUrl')) ? redirect($url) : redirect()->route('admix.banners.index');
     }
 
-    public function show(Banner $banner)
+    public function show(Banner $banner): View
     {
         $view['model'] = $banner;
 
         return view('agenciafmd/banners::form', $view);
     }
 
-    public function edit(Banner $banner)
+    public function edit(Banner $banner): View
     {
         $view['model'] = $banner;
 
         return view('agenciafmd/banners::form', $view);
     }
 
-    public function update(Banner $banner, BannerRequest $request)
+    public function update(Banner $banner, BannerRequest $request): RedirectResponse
     {
         if ($banner->update($request->validated())) {
             flash('Item atualizado com sucesso.', 'success');
@@ -81,7 +83,7 @@ class BannerController extends Controller
         return ($url = session()->get('backUrl')) ? redirect($url) : redirect()->route('admix.banners.index');
     }
 
-    public function destroy(Banner $banner)
+    public function destroy(Banner $banner): RedirectResponse
     {
         if ($banner->delete()) {
             flash('Item removido com sucesso.', 'success');
@@ -92,7 +94,7 @@ class BannerController extends Controller
         return ($url = session()->get('backUrl')) ? redirect($url) : redirect()->route('admix.banners.index');
     }
 
-    public function restore($id)
+    public function restore($id): RedirectResponse
     {
         $banner = Banner::onlyTrashed()
             ->find($id);
@@ -108,7 +110,7 @@ class BannerController extends Controller
         return ($url = session()->get('backUrl')) ? redirect($url) : redirect()->route('admix.banners.index');
     }
 
-    public function batchDestroy(Request $request)
+    public function batchDestroy(Request $request): RedirectResponse
     {
         if (Banner::destroy($request->get('id', []))) {
             flash('Item removido com sucesso.', 'success');
@@ -119,7 +121,7 @@ class BannerController extends Controller
         return ($url = session()->get('backUrl')) ? redirect($url) : redirect()->route('admix.banners.index');
     }
 
-    public function batchRestore(Request $request)
+    public function batchRestore(Request $request): RedirectResponse
     {
         $banner = Banner::onlyTrashed()
             ->whereIn('id', $request->get('id', []))
