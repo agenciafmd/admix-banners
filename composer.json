@@ -1,25 +1,22 @@
 {
     "name": "agenciafmd/admix-banners",
     "description": "Banners - Agência F&MD",
-    "homepage": "https://github.com/agenciafmd/admix-banners",
-    "license": "MIT",
     "authors": [
         {
-            "name": "Irineu Junior",
-            "email": "irineu@fmd.ag",
+          "name": "João Paulo  dos Santos Ferreira",
+          "email": "joao.paulo@fmd.ag",
             "homepage": "https://fmd.ag/",
             "role": "Developer"
         }
     ],
     "require": {
-        "laravel/framework": "^8.0"
+      "laravel/framework": "11.*"
     },
     "autoload": {
-        "files": [
-            "src/Http/helpers.php"
-        ],
         "psr-4": {
-            "Agenciafmd\\Banners\\": "src/"
+          "Agenciafmd\\Banners\\": "src/",
+          "Agenciafmd\\Banners\\Database\\Factories\\": "database/factories/",
+          "Agenciafmd\\Banners\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "extra": {
@@ -28,5 +25,8 @@
                 "Agenciafmd\\Banners\\Providers\\BannerServiceProvider"
             ]
         }
+    },
+  "config": {
+    "sort-packages": true
     }
 }

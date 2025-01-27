@@ -10,26 +10,13 @@
 ## Instalação
 
 ```bash
-composer require agenciafmd/admix-banners:v8.x-dev
+composer require agenciafmd/admix-banners:v11.x-dev
 ```
 
 Execute a migração
 
 ```bash
 php artisan migrate
-```
-
-O jeito mais prático para customizar os banners, é publicar: 
-
-```
-config/upload-configs.php
-database/faker/banners/*
-```
-
-Para isso, usaremos.
-
-```bash
-php artisan vendor:publish --tag=admix-banners:minimal
 ```
 
 Para uma customização mais forte, execute:
@@ -40,26 +27,11 @@ php artisan vendor:publish --tag=admix-banners:seeders
 
 **Não esqueça**
 
-- de trocar os banners em `database/faker/banners` para que o projeto fique belo
 - de adicionar o `BannersTableSeeder::class` em `database/seeders/DatabaseSeeder.php`
 - de executar o `composer dumpautoload`
 
 ## Uso
 
-Chame o componente `<x-banner />`
-
-A configuração padrão é
-
-```html
-
-<x-banner quantity=4
-          location='home'
-          :random=false
-          template='agenciafmd/banners::components.home'
-/>
-```
-
-Se for preciso alguma customização da listagem dos banners, crie o blade do component no namespace do frontend
 
 ## Configurações
 
@@ -69,9 +41,6 @@ Caso seja necessário alguma modificação, publique o arquivo de config com o c
 php artisan vendor:publish --tag=admix-banners:configs
 ```
 
-Para mais de um local, adicione mais um item no `locations` em `admix-banners.php` e configure os tamanhos
-em `upload-configs.php`
-
 Ex.
 
 ```php
@@ -79,85 +48,7 @@ Ex.
 
 return [
     'name' => 'Banners',
-    'icon' => 'icon fe-monitor',
-    'sort' => 20,
-    'default_sort' => [
-        '-is_active',
-        '-star',
-        '-published_at',
-        'name',
-    ],
-    'locations' => [
-        'home' => [
-            'name' => 'Home',
-            'html' => true,
-            'meta' => [
-                [
-                    'label' => 'tipo',
-                    'name' => 'type',
-                    'options' => [
-                        'Plantas Baixas',
-                        'Implantações',
-                    ],
-                ],
-                [
-                    'label' => 'título',
-                    'name' => 'title',
-                ],
-                [
-                    'label' => 'subtítulo',
-                    'name' => 'subtitle',
-                ],
-            ],
-        ],
-        ...
-    ],
-];
-```
-
-Para mais um formato, adicione mais um item no `banner`
-
-```php
-<?php
-
-return [
-    'banner' => [
-        'home' => [
-            'desktop' => [
-                'label' => 'desktop',
-                'sources' => [
-                    [
-                        'conversion' => 'desktop',
-                        'media' => '(min-width: 1600px)',
-                        'width' => 1920 * 2,
-                        'height' => 850 * 2,
-                    ],
-                ],
-            ],
-            'notebook' => [
-                'label' => 'notebook',
-                'sources' => [
-                    [
-                        'conversion' => 'notebook',
-                        'media' => '(min-width: 1024px)',
-                        'width' => 1366 * 2,
-                        'height' => 605 * 2,
-                    ],
-                ],
-            ],
-            'mobile' => [
-                'label' => 'mobile',
-                'sources' => [
-                    [
-                        'conversion' => 'mobile',
-                        'media' => '(max-width: 1023px)',
-                        'width' => 375 * 2,
-                        'height' => 600 * 2,
-                    ],
-                ],
-            ],
-        ],
-        ...
-    ],
+    'icon' => 'device-desktop',
+    'sort' => 100,
 ];
 ```

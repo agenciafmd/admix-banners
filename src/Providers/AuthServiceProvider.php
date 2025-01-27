@@ -16,4 +16,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
     }
+
+    public function register(): void
+    {
+        $this->loadConfigs();
+    }
+
+    public function loadConfigs(): void
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../../config/gate.php', 'gate');
+    }
 }

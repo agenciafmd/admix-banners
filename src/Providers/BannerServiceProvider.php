@@ -14,9 +14,9 @@ class BannerServiceProvider extends ServiceProvider
 
         $this->setObservers();
 
-        $this->setSearch();
-
         $this->loadMigrations();
+
+        $this->loadTranslations();
 
         $this->publish();
     }
@@ -26,53 +26,49 @@ class BannerServiceProvider extends ServiceProvider
         $this->loadConfigs();
     }
 
-    protected function providers(): void
+    private function providers(): void
     {
-        $this->app->register(AuthServiceProvider::class);
         $this->app->register(BladeServiceProvider::class);
+        $this->app->register(CommandServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(AuthServiceProvider::class);
+        $this->app->register(LivewireServiceProvider::class);
     }
 
-    protected function setSearch(): void
+    private function publish(): void
     {
-        $this->app->make('admix-search')
-            ->registerModel(Banner::class, 'name');
+        $this->publishes([
+            __DIR__ . '/../../config/admix-banners.php' => base_path('config/admix-banners.php'),
+        ], 'admix-banners:configs');
+
+        $this->publishes([
+            __DIR__ . '/../../database/seeders/BannerTableSeeder.php' => base_path('database/seeders/BannerTableSeeder.php'),
+        ], 'admix-banners:seeders');
+
+        $this->publishes([
+            __DIR__ . '/../../lang/pt_BR' => lang_path('pt_BR'),
+        ], ['admix-banners:translations', 'admix-translations']);
     }
 
-    protected function setObservers(): void
+    private function setObservers(): void
     {
         Banner::observe(BannerObserver::class);
     }
 
-    protected function loadMigrations(): void
+    private function loadMigrations(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
     }
 
-    protected function publish(): void
+    private function loadTranslations(): void
     {
-        $this->publishes([
-            __DIR__ . '/../Database/Faker' => base_path('database/faker'),
-            __DIR__ . '/../config/upload-configs.php' => base_path('config/upload-configs.php'),
-        ], 'admix-banners:minimal');
-
-        $this->publishes([
-            __DIR__ . '/../config/admix-banners.php' => base_path('config/admix-banners.php'),
-            __DIR__ . '/../config/upload-configs.php' => base_path('config/upload-configs.php'),
-        ], 'admix-banners:configs');
-
-        $this->publishes([
-            __DIR__ . '/../Database/Factories/BannerFactory.php' => base_path('database/factories/BannerFactory.php'),
-            __DIR__ . '/../Database/Faker' => base_path('database/faker'),
-            __DIR__ . '/../Database/Seeders/BannersTableSeeder.php' => base_path('database/seeders/BannersTableSeeder.php'),
-        ], 'admix-banners:seeders');
+        $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'admix-banners');
+        $this->loadJsonTranslationsFrom(__DIR__ . '/../../lang');
     }
 
-    protected function loadConfigs(): void
+    private function loadConfigs(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/admix-banners.php', 'admix-banners');
-        $this->mergeConfigFrom(__DIR__ . '/../config/upload-configs.php', 'upload-configs');
-        $this->mergeConfigFrom(__DIR__ . '/../config/gate.php', 'gate');
-        $this->mergeConfigFrom(__DIR__ . '/../config/audit-alias.php', 'audit-alias');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/admix-banners.php', 'admix-banners');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/audit-alias.php', 'audit-alias');
     }
 }

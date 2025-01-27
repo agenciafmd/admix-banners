@@ -2,7 +2,6 @@
 
 namespace Agenciafmd\Banners\Providers;
 
-use Agenciafmd\Banners\Http\Components\Banner;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,8 +19,6 @@ class BladeServiceProvider extends ServiceProvider
 
         $this->loadViews();
 
-        $this->loadTranslations();
-
         $this->publish();
     }
 
@@ -30,44 +27,39 @@ class BladeServiceProvider extends ServiceProvider
         //
     }
 
-    protected function loadBladeComponents(): void
+    private function loadBladeComponents(): void
     {
-        Blade::component('banner', Banner::class);
+        Blade::componentNamespace('Agenciafmd\\Banners\\Http\\Components', 'admix-banners');
     }
 
-    protected function loadBladeComposers(): void
-    {
-        //
-    }
-
-    protected function loadBladeDirectives(): void
+    private function loadBladeComposers(): void
     {
         //
     }
 
-    protected function setMenu(): void
+    private function loadBladeDirectives(): void
+    {
+        //
+    }
+
+    private function setMenu(): void
     {
         $this->app->make('admix-menu')
             ->push((object)[
-                'view' => 'agenciafmd/banners::partials.menus.item',
-                'ord' => config('admix-banners.sort', 1),
+                'component' => 'admix-banners::aside.banner',
+                'ord' => config('admix-banners.sort'),
             ]);
     }
 
-    protected function loadViews(): void
+    private function loadViews(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'agenciafmd/banners');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'admix-banners');
     }
 
-    protected function loadTranslations(): void
+    private function publish(): void
     {
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'agenciafmd/banners');
-    }
-
-    protected function publish(): void
-    {
-        $this->publishes([
-            __DIR__ . '/../resources/views/frontend' => base_path('resources/views/vendor/agenciafmd/banners/frontend'),
-        ], 'admix-banners:views');
+        // $this->publishes([
+        //     __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/banners'),
+        // ], 'admix-banners:views');
     }
 }
