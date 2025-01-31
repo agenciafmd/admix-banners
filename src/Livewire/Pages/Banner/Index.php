@@ -34,12 +34,12 @@ class Index extends BaseIndex
             DateTimeFilter::make(__('admix-banners::fields.published_at'), 'published_at')
                 ->filter(static function (Builder $builder, string $value) {
                     $builder->where($builder->qualifyColumn('published_at'), '>=', Carbon::parse($value)
-                        ->format('Y-m-d H:i:s'));
+                        ->format(config('admix.timestamp.format')));
                 }),
             DateTimeFilter::make(__('admix-banners::fields.until_then'), 'until_then')
                 ->filter(static function (Builder $builder, string $value) {
                     $builder->where($builder->qualifyColumn('until_then'), '<=', Carbon::parse($value)
-                        ->format('Y-m-d H:i:s'));
+                        ->format(config('admix.timestamp.format')));
                 }),
         ]);
 
@@ -69,5 +69,4 @@ class Index extends BaseIndex
 
         return parent::columns();
     }
-
 }
