@@ -71,7 +71,7 @@ class Form extends LivewireForm
                 'url',
             ],
             'target' => [
-                'require',
+                'required',
                 'nullable',
             ],
             'published_at' => [
