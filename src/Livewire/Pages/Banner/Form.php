@@ -23,9 +23,6 @@ class Form extends LivewireForm
     public ?string $target = null;
 
     #[Validate]
-    public ?string $description = null;
-
-    #[Validate]
     public ?string $link = null;
 
     #[Validate]
@@ -41,7 +38,6 @@ class Form extends LivewireForm
             $this->is_active = $banner->is_active;
             $this->name = $banner->name;
             $this->target = $banner->target;
-            $this->description = $banner->description;
             $this->link = $banner->link;
             $this->published_at = $banner->published_at?->format('Y-m-d\TH:i');
             $this->until_then = $banner->until_then?->format('Y-m-d\TH:i');
@@ -62,9 +58,6 @@ class Form extends LivewireForm
             'name' => [
                 'required',
                 'max:255',
-            ],
-            'description' => [
-                'nullable',
             ],
             'link' => [
                 'nullable',
@@ -92,7 +85,6 @@ class Form extends LivewireForm
             'star' => __('admix-banners::fields.star'),
             'name' => __('admix-banners::fields.name'),
             'target' => __('admix-banners::fields.target'),
-            'description' => __('admix-banners::fields.description'),
             'link' => __('admix-banners::fields.link'),
             'published_at' => __('admix-banners::fields.published_at'),
             'until_then' => __('admix-banners::fields.until_then'),

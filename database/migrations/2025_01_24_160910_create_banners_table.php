@@ -19,7 +19,7 @@ return new class extends Migration
                 ->index()
                 ->default(0);
             $table->string('name');
-            $table->text('description')
+            $table->json('meta')
                 ->nullable();
             $table->string('link', 150)
                 ->nullable();
