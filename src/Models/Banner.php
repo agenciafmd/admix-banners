@@ -21,16 +21,19 @@ class Banner extends Model implements AuditableContract
         //
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-        'published_at' => 'datetime',
-        'until_then' => 'datetime',
-    ];
-
     protected array $defaultSort = [
         'is_active' => 'desc',
         'name' => 'asc',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'published_at' => 'datetime',
+            'until_then' => 'datetime',
+        ];
+    }
 
     public function prunable(): Builder
     {
