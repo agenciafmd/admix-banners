@@ -3,6 +3,7 @@
 namespace Agenciafmd\Banners\Livewire\Pages\Banner;
 
 use Agenciafmd\Banners\Models\Banner;
+use Agenciafmd\Ui\Traits\WithMediaSync;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -10,10 +11,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component as LivewireComponent;
 use Livewire\Features\SupportRedirects\Redirector;
+use Livewire\WithFileUploads;
 
 class Component extends LivewireComponent
 {
-    use AuthorizesRequests;
+    use AuthorizesRequests, WithFileUploads, WithMediaSync;
 
     public Form $form;
 

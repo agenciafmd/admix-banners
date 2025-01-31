@@ -5,6 +5,7 @@ namespace Agenciafmd\Banners\Models;
 use Agenciafmd\Admix\Traits\WithScopes;
 use Agenciafmd\Admix\Traits\WithSlug;
 use Agenciafmd\Banners\Database\Factories\BannerFactory;
+use Agenciafmd\Ui\Casts\AsSingleMediaLibrary;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,13 +13,22 @@ use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Banner extends Model implements AuditableContract
+class Banner extends Model implements AuditableContract, HasMedia
 {
-    use Auditable, HasFactory, Prunable, SoftDeletes, WithScopes, WithSlug;
+    use Auditable, HasFactory, InteractsWithMedia, Prunable, SoftDeletes, WithScopes, WithSlug;
 
-    protected $guarded = [
-        //
+    protected $fillable = [
+        'is_active',
+        'star',
+        'name',
+        'meta',
+        'link',
+        'target',
+        'published_at',
+        'until_then',
     ];
 
     protected array $defaultSort = [
@@ -32,6 +42,7 @@ class Banner extends Model implements AuditableContract
             'is_active' => 'boolean',
             'published_at' => 'datetime',
             'until_then' => 'datetime',
+            'desktop' => AsSingleMediaLibrary::class,
         ];
     }
 

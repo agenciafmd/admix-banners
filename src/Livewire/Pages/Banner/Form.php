@@ -3,11 +3,16 @@
 namespace Agenciafmd\Banners\Livewire\Pages\Banner;
 
 use Agenciafmd\Banners\Models\Banner;
+use Agenciafmd\Ui\Traits\WithMediaSync;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
 {
+    use WithMediaSync;
+
     public Banner $banner;
 
     #[Validate]
@@ -31,9 +36,20 @@ class Form extends LivewireForm
     #[Validate]
     public ?string $until_then = null;
 
+    #[Validate]
+    public array $desktop_files = [];
+
+    #[Validate]
+    public array $desktop_meta = [];
+
+    #[Validate]
+    public Collection $desktop;
+
     public function setModel(Banner $banner): void
     {
         $this->banner = $banner;
+        $this->desktop = collect();
+        $this->desktop_meta = [];
         if ($banner->exists) {
             $this->is_active = $banner->is_active;
             $this->name = $banner->name;
@@ -41,6 +57,9 @@ class Form extends LivewireForm
             $this->link = $banner->link;
             $this->published_at = $banner->published_at?->format('Y-m-d\TH:i');
             $this->until_then = $banner->until_then?->format('Y-m-d\TH:i');
+            $this->desktop = $banner->desktop;
+            $this->desktop_meta = $this->desktop->pluck('meta')
+                ->toArray();
         }
     }
 
@@ -75,6 +94,21 @@ class Form extends LivewireForm
                 'nullable',
                 'date_format:Y-m-d\TH:i',
             ],
+            'desktop_files.*' => [
+                'image',
+                'max:1024',
+                Rule::dimensions()
+                    ->maxWidth(1200)
+                    ->maxHeight(1200),
+            ],
+            'desktop' => [
+                'array',
+                'required',
+                'min:1',
+            ],
+            'desktop_meta' => [
+                'array',
+            ],
         ];
     }
 
@@ -88,13 +122,21 @@ class Form extends LivewireForm
             'link' => __('admix-banners::fields.link'),
             'published_at' => __('admix-banners::fields.published_at'),
             'until_then' => __('admix-banners::fields.until_then'),
+            'desktop' => __('admix-banners::fields.desktop'),
+            'desktop_files.*' => __('admix-banners::fields.desktop_files'),
         ];
     }
 
     public function save(): bool
     {
         $this->validate(rules: $this->rules(), attributes: $this->validationAttributes());
-        $this->banner->fill($this->except('banner'));
+        $this->banner->fill($this->except(['banner']));
+
+        if (!$this->banner->exists) {
+            $this->banner->save();
+        }
+
+        $this->syncMedia($this->banner, 'desktop');
 
         return $this->banner->save();
     }

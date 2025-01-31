@@ -9,4 +9,6 @@ return [
     'target' => 'abrir o link',
     'published_at' => 'exibir a partir de',
     'until_then' => 'exibir até',
+    'desktop' => 'desktop',
+    'desktop_files' => 'desktop',
 ];

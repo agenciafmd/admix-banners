@@ -34,6 +34,17 @@
         </div>
         <div class="col-md-6 mb-3">
         </div>
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <x-form.image
+                        name="form.desktop"
+                        :label="__('admix-banners::fields.desktop')"
+                        :crop-config="[
+                            'aspectRatio' => 1,
+                        ]"
+                />
+            </div>
+        </div>
         <div class="col-md-6 mb-3">
             <x-form.input
                     name="form.link"
