@@ -1,5 +1,5 @@
 <x-page.form
-        title="{{ $banner->exists ? __('Update :name', ['name' => __(config('admix-banners.name'))]) : __('Create :name', ['name' => __(config('admix-banners.name'))]) }}">
+    title="{{ $banner->exists ? __('Update :name', ['name' => __(config('admix-banners.name'))]) : __('Create :name', ['name' => __(config('admix-banners.name'))]) }}">
     <div class="row">
         <div class="col-md-6 mb-3">
             <x-form.label for="form.is_active">
@@ -27,13 +27,15 @@
             <x-form.input name="form.name" :label="__('admix-banners::fields.name')"/>
         </div>
         <div class="col-md-6 mb-3">
-            <x-form.select name="form.target" :label="__('admix-banners::fields.target')" :options="$targetOptions"/>
         </div>
         <div class="col-md-12 mb-3">
             <x-form.textarea name="form.description" :label="__('admix-banners::fields.description')"/>
         </div>
-        <div class="col-md-12 mb-3">
+        <div class="col-md-6 mb-3">
             <x-form.input name="form.link" :label="__('admix-banners::fields.link')"/>
+        </div>
+        <div class="col-md-6 mb-3">
+            <x-form.select name="form.target" :label="__('admix-banners::fields.target')" :options="$targetOptions"/>
         </div>
         <div class="col-md-6 mb-3">
             <x-form.datetime name="form.published_at" :label="__('admix-banners::fields.published_at')"/>

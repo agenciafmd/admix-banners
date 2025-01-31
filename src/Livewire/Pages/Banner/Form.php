@@ -17,10 +17,10 @@ class Form extends LivewireForm
     public bool $star = false;
 
     #[Validate]
-    public ?string $name = '';
+    public string $name = '';
 
     #[Validate]
-    public ?string $target = '';
+    public ?string $target = null;
 
     #[Validate]
     public ?string $description = null;
@@ -43,8 +43,8 @@ class Form extends LivewireForm
             $this->target = $banner->target;
             $this->description = $banner->description;
             $this->link = $banner->link;
-            $this->published_at = $banner->published_at;
-            $this->until_then = $banner->until_then;
+            $this->published_at = $banner->published_at?->format('Y-m-d\TH:i');
+            $this->until_then = $banner->until_then?->format('Y-m-d\TH:i');
         }
     }
 
@@ -52,22 +52,26 @@ class Form extends LivewireForm
     {
         return [
             'is_active' => [
+                'required',
                 'boolean',
             ],
             'star' => [
+                'required',
                 'boolean',
             ],
             'name' => [
                 'required',
                 'max:255',
             ],
-            'target' => [
-                'nullable',
-            ],
             'description' => [
                 'nullable',
             ],
             'link' => [
+                'nullable',
+                'url',
+            ],
+            'target' => [
+                'require',
                 'nullable',
             ],
             'published_at' => [
