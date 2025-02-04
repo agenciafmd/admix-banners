@@ -115,10 +115,10 @@ class Form extends LivewireForm
             ],
             'desktop_files.*' => [
                 'image',
-                'max:4096',
+                'max:' . config('admix-banners.files.desktop.max'),
                 Rule::dimensions()
-                    ->maxWidth(3600)
-                    ->maxHeight(1700),
+                    ->maxWidth(config('admix-banners.files.desktop.max_width'))
+                    ->maxHeight(config('admix-banners.files.desktop.max_height')),
             ],
             'desktop' => [
                 'array',
@@ -127,10 +127,10 @@ class Form extends LivewireForm
             ],
             'notebook_files.*' => [
                 'image',
-                'max:2048',
+                'max:' . config('admix-banners.files.notebook.max'),
                 Rule::dimensions()
-                    ->maxWidth(2160)
-                    ->maxHeight(1660),
+                    ->maxWidth(config('admix-banners.files.notebook.max_width'))
+                    ->maxHeight(config('admix-banners.files.notebook.max_height')),
             ],
             'notebook' => [
                 'array',
@@ -139,10 +139,10 @@ class Form extends LivewireForm
             ],
             'mobile_files.*' => [
                 'image',
-                'max:2048',
+                'max:' . config('admix-banners.files.mobile.max'),
                 Rule::dimensions()
-                    ->maxWidth(1360)
-                    ->maxHeight(2380),
+                    ->maxWidth(config('admix-banners.files.mobile.max_width'))
+                    ->maxHeight(config('admix-banners.files.mobile.max_height')),
             ],
             'mobile' => [
                 'array',
