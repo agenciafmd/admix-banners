@@ -5,7 +5,9 @@ namespace Agenciafmd\Banners\Models;
 use Agenciafmd\Admix\Traits\WithScopes;
 use Agenciafmd\Admix\Traits\WithSlug;
 use Agenciafmd\Banners\Database\Factories\BannerFactory;
+use Agenciafmd\Banners\Observers\BannerObserver;
 use Agenciafmd\Ui\Casts\AsSingleMediaLibrary;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +18,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+#[ObservedBy([BannerObserver::class])]
 class Banner extends Model implements AuditableContract, HasMedia
 {
     use Auditable, HasFactory, InteractsWithMedia, Prunable, SoftDeletes, WithScopes, WithSlug;

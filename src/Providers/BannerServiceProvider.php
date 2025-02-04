@@ -2,8 +2,6 @@
 
 namespace Agenciafmd\Banners\Providers;
 
-use Agenciafmd\Banners\Models\Banner;
-use Agenciafmd\Banners\Observers\BannerObserver;
 use Illuminate\Support\ServiceProvider;
 
 class BannerServiceProvider extends ServiceProvider
@@ -11,8 +9,6 @@ class BannerServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->providers();
-
-        $this->setObservers();
 
         $this->loadMigrations();
 
@@ -48,11 +44,6 @@ class BannerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../lang/pt_BR' => lang_path('pt_BR'),
         ], ['admix-banners:translations', 'admix-translations']);
-    }
-
-    private function setObservers(): void
-    {
-        Banner::observe(BannerObserver::class);
     }
 
     private function loadMigrations(): void
