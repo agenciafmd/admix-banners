@@ -43,13 +43,32 @@ class Form extends LivewireForm
     public array $desktop_meta = [];
 
     #[Validate]
+    public array $notebook_files = [];
+
+    #[Validate]
+    public array $notebook_meta = [];
+
+    #[Validate]
+    public array $mobile_files = [];
+
+    #[Validate]
+    public array $mobile_meta = [];
+
+    #[Validate]
     public Collection $desktop;
+
+    #[Validate]
+    public Collection $notebook;
+
+    #[Validate]
+    public Collection $mobile;
 
     public function setModel(Banner $banner): void
     {
         $this->banner = $banner;
         $this->desktop = collect();
-        $this->desktop_meta = [];
+        $this->notebook = collect();
+        $this->mobile = collect();
         if ($banner->exists) {
             $this->is_active = $banner->is_active;
             $this->name = $banner->name;
@@ -58,8 +77,8 @@ class Form extends LivewireForm
             $this->published_at = $banner->published_at?->format('Y-m-d\TH:i');
             $this->until_then = $banner->until_then?->format('Y-m-d\TH:i');
             $this->desktop = $banner->desktop;
-            $this->desktop_meta = $this->desktop->pluck('meta')
-                ->toArray();
+            $this->notebook = $banner->notebook;
+            $this->mobile = $banner->mobile;
         }
     }
 
@@ -96,18 +115,39 @@ class Form extends LivewireForm
             ],
             'desktop_files.*' => [
                 'image',
-                'max:1024',
+                'max:4096',
                 Rule::dimensions()
-                    ->maxWidth(1200)
-                    ->maxHeight(1200),
+                    ->maxWidth(3600)
+                    ->maxHeight(1700),
             ],
             'desktop' => [
                 'array',
                 'required',
                 'min:1',
             ],
-            'desktop_meta' => [
+            'notebook_files.*' => [
+                'image',
+                'max:2048',
+                Rule::dimensions()
+                    ->maxWidth(2160)
+                    ->maxHeight(1660),
+            ],
+            'notebook' => [
                 'array',
+                'required',
+                'min:1',
+            ],
+            'mobile_files.*' => [
+                'image',
+                'max:2048',
+                Rule::dimensions()
+                    ->maxWidth(1360)
+                    ->maxHeight(2380),
+            ],
+            'mobile' => [
+                'array',
+                'required',
+                'min:1',
             ],
         ];
     }
@@ -124,6 +164,10 @@ class Form extends LivewireForm
             'until_then' => __('admix-banners::fields.until_then'),
             'desktop' => __('admix-banners::fields.desktop'),
             'desktop_files.*' => __('admix-banners::fields.desktop_files'),
+            'notebook' => __('admix-banners::fields.notebook'),
+            'notebook_files.*' => __('admix-banners::fields.notebook_files'),
+            'mobile' => __('admix-banners::fields.mobile'),
+            'mobile_files.*' => __('admix-banners::fields.mobile_files'),
         ];
     }
 
@@ -137,6 +181,8 @@ class Form extends LivewireForm
         }
 
         $this->syncMedia($this->banner, 'desktop');
+        $this->syncMedia($this->banner, 'notebook');
+        $this->syncMedia($this->banner, 'mobile');
 
         return $this->banner->save();
     }

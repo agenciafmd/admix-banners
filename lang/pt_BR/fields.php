@@ -11,4 +11,8 @@ return [
     'until_then' => 'exibir até',
     'desktop' => 'desktop',
     'desktop_files' => 'desktop',
+    'notebook' => 'notebook',
+    'notebook_files' => 'notebook',
+    'mobile' => 'mobile',
+    'mobile_files' => 'mobile',
 ];

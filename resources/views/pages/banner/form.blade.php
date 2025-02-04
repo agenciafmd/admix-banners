@@ -34,16 +34,31 @@
         </div>
         <div class="col-md-6 mb-3">
         </div>
-        <div class="row">
-            <div class="col-md-12 mb-3">
-                <x-form.image
-                        name="form.desktop"
-                        :label="__('admix-banners::fields.desktop')"
-                        :crop-config="[
-                            'aspectRatio' => 1,
-                        ]"
-                />
-            </div>
+        <div class="col-md-12 mb-3">
+            <x-form.image
+                    name="form.desktop"
+                    :label="__('admix-banners::fields.desktop')"
+                    :hide-content="true"
+                    :hide-crop="true"
+                    :full-width="true"
+            />
+        </div>
+        <div class="col-md-12 mb-3">
+            <x-form.image
+                    name="form.notebook"
+                    :label="__('admix-banners::fields.notebook')"
+                    :hide-content="true"
+                    :hide-crop="true"
+                    :full-width="true"
+            />
+        </div>
+        <div class="col-md-12 mb-3">
+            <x-form.image
+                    name="form.mobile"
+                    :label="__('admix-banners::fields.mobile')"
+                    :hide-content="true"
+                    :hide-crop="true"
+            />
         </div>
         <div class="col-md-6 mb-3">
             <x-form.input

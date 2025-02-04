@@ -43,6 +43,8 @@ class Banner extends Model implements AuditableContract, HasMedia
             'published_at' => 'datetime',
             'until_then' => 'datetime',
             'desktop' => AsSingleMediaLibrary::class,
+            'notebook' => AsSingleMediaLibrary::class,
+            'mobile' => AsSingleMediaLibrary::class,
         ];
     }
 
