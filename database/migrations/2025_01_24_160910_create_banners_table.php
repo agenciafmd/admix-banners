@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('banners', static function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->boolean('is_active')
                 ->unsigned()
                 ->index()
