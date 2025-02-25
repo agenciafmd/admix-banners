@@ -9,17 +9,17 @@ class BladeServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadBladeComponents();
+        $this->bootBladeComponents();
 
-        $this->loadBladeDirectives();
+        $this->bootBladeDirectives();
 
-        $this->loadBladeComposers();
+        $this->bootBladeComposers();
 
-        $this->setMenu();
+        $this->bootMenu();
 
-        $this->loadViews();
+        $this->bootViews();
 
-        $this->publish();
+        $this->bootPublish();
     }
 
     public function register(): void
@@ -27,36 +27,36 @@ class BladeServiceProvider extends ServiceProvider
         //
     }
 
-    private function loadBladeComponents(): void
+    private function bootBladeComponents(): void
     {
         Blade::componentNamespace('Agenciafmd\\Banners\\Http\\Components', 'admix-banners');
     }
 
-    private function loadBladeComposers(): void
+    private function bootBladeComposers(): void
     {
         //
     }
 
-    private function loadBladeDirectives(): void
+    private function bootBladeDirectives(): void
     {
         //
     }
 
-    private function setMenu(): void
+    private function bootMenu(): void
     {
         $this->app->make('admix-menu')
-            ->push((object)[
+            ->push((object) [
                 'component' => 'admix-banners::aside.banner',
                 'ord' => config('admix-banners.sort'),
             ]);
     }
 
-    private function loadViews(): void
+    private function bootViews(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'admix-banners');
     }
 
-    private function publish(): void
+    private function bootPublish(): void
     {
         // $this->publishes([
         //     __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/banners'),
