@@ -38,8 +38,9 @@
             <x-form.image
                     name="form.desktop"
                     :label="__('admix-banners::fields.desktop')"
-                    :hide-content="true"
-                    :hide-crop="true"
+                    :hide-content="!config('admix-banners.files.desktop.show_meta')"
+                    :hide-crop="!config('admix-banners.files.desktop.crop_config')"
+                    :crop-config="config('admix-banners.files.desktop.crop_config')"
                     :full-width="true"
             />
         </div>
@@ -47,8 +48,9 @@
             <x-form.image
                     name="form.notebook"
                     :label="__('admix-banners::fields.notebook')"
-                    :hide-content="true"
-                    :hide-crop="true"
+                    :hide-content="!config('admix-banners.files.notebook.show_meta')"
+                    :hide-crop="!config('admix-banners.files.notebook.crop_config')"
+                    :crop-config="config('admix-banners.files.notebook.crop_config')"
                     :full-width="true"
             />
         </div>
@@ -56,8 +58,9 @@
             <x-form.image
                     name="form.mobile"
                     :label="__('admix-banners::fields.mobile')"
-                    :hide-content="true"
-                    :hide-crop="true"
+                    :hide-content="!config('admix-banners.files.mobile.show_meta')"
+                    :hide-crop="!config('admix-banners.files.mobile.crop_config')"
+                    :crop-config="config('admix-banners.files.mobile.crop_config')"
             />
         </div>
         <div class="col-md-6 mb-3">
