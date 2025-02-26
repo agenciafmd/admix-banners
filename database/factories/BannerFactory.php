@@ -12,9 +12,9 @@ class BannerFactory extends Factory
     public function definition(): array
     {
         return [
-            'is_active' => $this->faker->optional(0.3, 1)
+            'is_active' => fake()->optional(0.3, 1)
                 ->randomElement([0]),
-            'name' => $this->faker->sentence(3),
+            'name' => fake()->sentence(3),
         ];
     }
 }
