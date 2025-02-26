@@ -174,7 +174,18 @@ class Form extends LivewireForm
     public function save(): bool
     {
         $this->validate(rules: $this->rules(), attributes: $this->validationAttributes());
-        $this->banner->fill($this->except(['banner']));
+        $this->banner->fill($this->except([
+            'banner',
+            'desktop',
+            'notebook',
+            'mobile',
+            'desktop_files',
+            'notebook_files',
+            'mobile_files',
+            'desktop_meta',
+            'notebook_meta',
+            'mobile_meta',
+        ]));
 
         if (!$this->banner->exists) {
             $this->banner->save();

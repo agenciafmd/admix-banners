@@ -7,6 +7,7 @@ use Agenciafmd\Admix\Traits\WithSlug;
 use Agenciafmd\Banners\Database\Factories\BannerFactory;
 use Agenciafmd\Banners\Observers\BannerObserver;
 use Agenciafmd\Ui\Casts\AsSingleMediaLibrary;
+use Agenciafmd\Ui\Traits\WithUpload;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,18 +22,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 #[ObservedBy([BannerObserver::class])]
 class Banner extends Model implements AuditableContract, HasMedia
 {
-    use Auditable, HasFactory, InteractsWithMedia, Prunable, SoftDeletes, WithScopes, WithSlug;
-
-    protected $fillable = [
-        'is_active',
-        'star',
-        'name',
-        'meta',
-        'link',
-        'target',
-        'published_at',
-        'until_then',
-    ];
+    use Auditable, HasFactory, InteractsWithMedia, Prunable, SoftDeletes, WithScopes, WithSlug, WithUpload;
 
     protected array $defaultSort = [
         'is_active' => 'desc',
