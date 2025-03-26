@@ -43,7 +43,7 @@ class Banner extends Model implements AuditableContract, HasMedia
 
     public function prunable(): Builder
     {
-        return self::where('deleted_at', '<=', now()->subYear());
+        return static::query()->where('deleted_at', '<=', now()->subYear());
     }
 
     protected static function newFactory(): BannerFactory|\Database\Factories\BannerFactory
