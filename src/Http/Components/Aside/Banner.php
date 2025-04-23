@@ -4,6 +4,8 @@ namespace Agenciafmd\Banners\Http\Components\Aside;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Gate;
+use Agenciafmd\Banners\Models\Banner as BannerModel;
 
 class Banner extends Component
 {
@@ -23,7 +25,7 @@ class Banner extends Component
         $this->label = __(config('admix-banners.name'));
         $this->url = route('admix.banners.index');
         $this->active = request()?->currentRouteNameStartsWith('admix.banners');
-        $this->visible = true;
+        $this->visible = Gate::allows('view', BannerModel::class);
 
         return view('admix::components.aside.item');
     }
