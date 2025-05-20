@@ -52,19 +52,15 @@ class Index extends BaseIndex
             Column::make(__('admix-banners::fields.published_at'), 'published_at')
                 ->sortable()
                 ->searchable()
-                ->format(static function ($value) {
-                    return $value
-                        ? $value->format(config('admix.timestamp.format'))
-                        : '-';
-                }),
+                ->format(static fn ($value) => $value
+                    ? $value->format(config('admix.timestamp.format'))
+                    : '-'),
             Column::make(__('admix-banners::fields.until_then'), 'until_then')
                 ->sortable()
                 ->searchable()
-                ->format(static function ($value) {
-                    return $value
-                        ? $value->format(config('admix.timestamp.format'))
-                        : '-';
-                }),
+                ->format(static fn ($value) => $value
+                    ? $value->format(config('admix.timestamp.format'))
+                    : '-'),
         ]);
 
         return parent::columns();
