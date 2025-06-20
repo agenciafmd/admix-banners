@@ -2,6 +2,7 @@
 
 namespace Agenciafmd\Banners\Providers;
 
+use Agenciafmd\Banners\Http\Components\Banner;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +31,7 @@ class BladeServiceProvider extends ServiceProvider
     private function bootBladeComponents(): void
     {
         Blade::componentNamespace('Agenciafmd\\Banners\\Http\\Components', 'admix-banners');
+        Blade::component('banner', Banner::class);
     }
 
     private function bootBladeComposers(): void

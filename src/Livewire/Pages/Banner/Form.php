@@ -22,6 +22,9 @@ class Form extends LivewireForm
     public bool $star = false;
 
     #[Validate]
+    public string $location = '';
+
+    #[Validate]
     public string $name = '';
 
     #[Validate]
@@ -63,14 +66,17 @@ class Form extends LivewireForm
     #[Validate]
     public Collection $mobile;
 
-    public function setModel(Banner $banner): void
+    public function setModel(Banner $banner, string $location): void
     {
         $this->banner = $banner;
         $this->desktop = collect();
         $this->notebook = collect();
         $this->mobile = collect();
+        ($banner->exists) ?: $this->location = $location;
         if ($banner->exists) {
             $this->is_active = $banner->is_active;
+            $this->star = $banner->star;
+            $this->location = $banner->location;
             $this->name = $banner->name;
             $this->target = $banner->target;
             $this->link = $banner->link;
@@ -92,6 +98,9 @@ class Form extends LivewireForm
             'star' => [
                 'required',
                 'boolean',
+            ],
+            'location' => [
+                'required',
             ],
             'name' => [
                 'required',
@@ -115,10 +124,10 @@ class Form extends LivewireForm
             ],
             'desktop_files.*' => [
                 'image',
-                'max:' . config('admix-banners.files.desktop.max'),
+                'max:' . config("admix-banners.locations.{$this->location}.files.desktop.max"),
                 Rule::dimensions()
-                    ->maxWidth(config('admix-banners.files.desktop.max_width'))
-                    ->maxHeight(config('admix-banners.files.desktop.max_height')),
+                    ->maxWidth(config("admix-banners.locations.{$this->location}.files.desktop.max_width"))
+                    ->maxHeight(config("admix-banners.locations.{$this->location}.files.desktop.max_height")),
             ],
             'desktop' => [
                 'array',
@@ -127,10 +136,10 @@ class Form extends LivewireForm
             ],
             'notebook_files.*' => [
                 'image',
-                'max:' . config('admix-banners.files.notebook.max'),
+                'max:' . config("admix-banners.locations.{$this->location}.files.notebook.max"),
                 Rule::dimensions()
-                    ->maxWidth(config('admix-banners.files.notebook.max_width'))
-                    ->maxHeight(config('admix-banners.files.notebook.max_height')),
+                    ->maxWidth(config("admix-banners.locations.{$this->location}.files.notebook.max_width"))
+                    ->maxHeight(config("admix-banners.locations.{$this->location}.files.notebook.max_height")),
             ],
             'notebook' => [
                 'array',
@@ -139,10 +148,10 @@ class Form extends LivewireForm
             ],
             'mobile_files.*' => [
                 'image',
-                'max:' . config('admix-banners.files.mobile.max'),
+                'max:' . config("admix-banners.locations.{$this->location}.files.mobile.max"),
                 Rule::dimensions()
-                    ->maxWidth(config('admix-banners.files.mobile.max_width'))
-                    ->maxHeight(config('admix-banners.files.mobile.max_height')),
+                    ->maxWidth(config("admix-banners.locations.{$this->location}.files.mobile.max_width"))
+                    ->maxHeight(config("admix-banners.locations.{$this->location}.files.mobile.max_height")),
             ],
             'mobile' => [
                 'array',
@@ -158,6 +167,7 @@ class Form extends LivewireForm
             'is_active' => __('admix-banners::fields.is_active'),
             'star' => __('admix-banners::fields.star'),
             'name' => __('admix-banners::fields.name'),
+            'location' => __('admix-banners::fields.location'),
             'target' => __('admix-banners::fields.target'),
             'link' => __('admix-banners::fields.link'),
             'published_at' => __('admix-banners::fields.published_at'),

@@ -4,8 +4,11 @@ namespace Agenciafmd\Banners\Livewire\Pages\Banner;
 
 use Agenciafmd\Admix\Livewire\Pages\Base\Index as BaseIndex;
 use Agenciafmd\Banners\Models\Banner;
+use Agenciafmd\Banners\Services\BannerService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateTimeFilter;
 
@@ -20,6 +23,12 @@ class Index extends BaseIndex
     protected string $creteRoute = 'admix.banners.create';
 
     protected string $editRoute = 'admix.banners.edit';
+
+    protected $listeners = [
+        'bulkDelete' => 'bulkDelete',
+        'bulkRestore' => 'bulkRestore',
+        'createWithLocation' => 'createWithLocation',
+    ];
 
     public function configure(): void
     {
@@ -64,5 +73,34 @@ class Index extends BaseIndex
         ]);
 
         return parent::columns();
+    }
+
+    public function headerActions(): array
+    {
+        if ($this->indexRoute && $this->isTrash) {
+            return [
+                '<x-btn href="' . route($this->indexRoute) . '"
+                    label="' . __('Back') . '"/>',
+            ];
+        }
+        $actions = [];
+        if ($this->creteRoute && $this->user->can('create', $this->builder()->getModel())) {
+            $options = new BannerService()->locations();
+            $optionsString = str_replace(['{', '}', ':', '"'], ['[', ']', '=>', '\''], json_encode($options));
+            $actions[] = is_array($options) ? '<x-btn.create-with-options :options="' . $optionsString .  '"
+                label="' . $this->packageName . '" />' : '<x-btn.create href="' . route($this->creteRoute, [$options]) . '"
+                label="' . $this->packageName . '" />';
+        }
+        if ($this->trashRoute && $this->user->can('restore', $this->builder()->getModel())) {
+            $actions[] = '<x-btn.trash href="' . route($this->trashRoute) . '"
+                label="" />';
+        }
+
+        return $actions;
+    }
+
+    public function createWithLocation(string $location): RedirectResponse|Redirector
+    {
+        return redirect()->route($this->creteRoute, ['location' => $location]);
     }
 }

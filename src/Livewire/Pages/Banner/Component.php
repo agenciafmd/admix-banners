@@ -23,12 +23,15 @@ class Component extends LivewireComponent
 
     public array $targetOptions;
 
+    public string $location;
+
     public function mount(Banner $banner): void
     {
         ($banner->exists) ? $this->authorize('update', Banner::class) : $this->authorize('create', Banner::class);
 
         $this->banner = $banner;
-        $this->form->setModel($banner);
+        $this->location = ($banner->exists) ? $this->banner->location : request()->route()?->parameter('location');
+        $this->form->setModel($banner, $this->location);
         $this->targetOptions = $this->getTargetOptions();
     }
 

@@ -38,9 +38,9 @@
             <x-form.image
                     name="form.desktop"
                     :label="__('admix-banners::fields.desktop')"
-                    :hide-content="!config('admix-banners.files.desktop.show_meta')"
-                    :hide-crop="!config('admix-banners.files.desktop.crop_config')"
-                    :crop-config="config('admix-banners.files.desktop.crop_config')"
+                    :hide-content="!config('admix-banners.locations.' . $location . '.files.desktop.show_meta')"
+                    :hide-crop="!config('admix-banners.locations.' . $location . '.files.desktop.crop_config')"
+                    :crop-config="config('admix-banners.locations.' . $location . '.files.desktop.crop_config')"
                     :full-width="true"
             />
         </div>
@@ -48,9 +48,9 @@
             <x-form.image
                     name="form.notebook"
                     :label="__('admix-banners::fields.notebook')"
-                    :hide-content="!config('admix-banners.files.notebook.show_meta')"
-                    :hide-crop="!config('admix-banners.files.notebook.crop_config')"
-                    :crop-config="config('admix-banners.files.notebook.crop_config')"
+                    :hide-content="!config('admix-banners.locations.' . $location . '.files.notebook.show_meta')"
+                    :hide-crop="!config('admix-banners.locations.' . $location . '.files.notebook.crop_config')"
+                    :crop-config="config('admix-banners.locations.' . $location . '.files.notebook.crop_config')"
                     :full-width="true"
             />
         </div>
@@ -58,9 +58,9 @@
             <x-form.image
                     name="form.mobile"
                     :label="__('admix-banners::fields.mobile')"
-                    :hide-content="!config('admix-banners.files.mobile.show_meta')"
-                    :hide-crop="!config('admix-banners.files.mobile.crop_config')"
-                    :crop-config="config('admix-banners.files.mobile.crop_config')"
+                    :hide-content="!config('admix-banners.locations.' . $location . '.files.mobile.show_meta')"
+                    :hide-crop="!config('admix-banners.locations.' . $location . '.files.mobile.crop_config')"
+                    :crop-config="config('admix-banners.locations.' . $location . '.files.mobile.crop_config')"
             />
         </div>
         <div class="col-md-6 mb-3">
