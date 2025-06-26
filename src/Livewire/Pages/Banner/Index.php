@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateTimeFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class Index extends BaseIndex
 {
@@ -34,11 +35,20 @@ class Index extends BaseIndex
     {
         $this->packageName = __(config('admix-banners.name'));
 
+        $this->setAdditionalSelects([
+            'banners.location as location',
+        ]);
+
         parent::configure();
     }
 
     public function filters(): array
     {
+        $options = [];
+        foreach (array_keys(config('admix-banners.locations')) as $value) {
+            $options[$value] = ucfirst($value);
+        }
+
         $this->setAdditionalFilters([
             DateTimeFilter::make(__('admix-banners::fields.published_at'), 'published_at')
                 ->filter(static function (Builder $builder, string $value) {
@@ -50,6 +60,11 @@ class Index extends BaseIndex
                     $builder->where($builder->qualifyColumn('until_then'), '<=', Carbon::parse($value)
                         ->format(config('admix.timestamp.format')));
                 }),
+            SelectFilter::make(__('admix-banners::fields.location'), 'location')
+                ->options(collect($options)->prepend(__('-'), '')->toArray())
+                ->filter(function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('location'), $value);
+                })
         ]);
 
         return parent::filters();
@@ -70,6 +85,12 @@ class Index extends BaseIndex
                 ->format(static fn ($value) => $value
                     ? $value->format(config('admix.timestamp.format'))
                     : '-'),
+            Column::make(__('admix-banners::fields.location'), 'location')
+                ->sortable()
+                ->searchable()
+                ->format(static fn($value) => $value
+                    ? ucfirst($value)
+                    : '-')
         ]);
 
         return parent::columns();
