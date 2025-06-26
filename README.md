@@ -28,6 +28,7 @@ php artisan vendor:publish --tag=admix-banners:seeders
 **Não esqueça**
 
 - de adicionar o `BannersTableSeeder::class` em `database/seeders/DatabaseSeeder.php`
+- corrigir o namespace `Agenciafmd\Banners\Database\Seeders` para `Database\Seeders`
 - de executar o `composer dumpautoload`
 
 ## Uso
@@ -41,7 +42,7 @@ Caso seja necessário alguma modificação, publique o arquivo de config com o c
 php artisan vendor:publish --tag=admix-banners:configs
 ```
 
-Ex.
+Ex. Para adicionar uma nova localização além de `home`, adicione um novo item ao array `locations`, como em: `'home-destaque' => [...]`:
 
 ```php
 <?php
@@ -49,6 +50,43 @@ Ex.
 return [
     'name' => 'Banners',
     'icon' => 'device-desktop',
-    'sort' => 100,
+    'sort' => 110,
+    'locations' => [
+        'home' => [
+            'files' => [
+                'desktop' => [
+                    'max' => 4096,
+                    'max_width' => 3600,
+                    'max_height' => 1700,
+                    'crop_config' => [
+                        // 'aspectRatio' => round(3600 / 1700, 2),
+                    ],
+                    'show_meta' => false,
+                    'media' => '(min-width: 1400px)',
+                ],
+                'notebook' => [
+                    'max' => 2048,
+                    'max_width' => 2080,
+                    'max_height' => 1080,
+                    'crop_config' => [
+                        // 'aspectRatio' => round(2160 / 1660, 2),
+                    ],
+                    'show_meta' => false,
+                    'media' => '(min-width: 768px)',
+                ],
+                'mobile' => [
+                    'max' => 2048,
+                    'max_width' => 1360,
+                    'max_height' => 2380,
+                    'crop_config' => [
+                        // 'aspectRatio' => round(1360 / 2380, 2),
+                    ],
+                    'show_meta' => false,
+                    'media' => '(max-width: 767px)',
+                ],
+            ],
+        ],
+        'home-destaque' => [...],
+    ],
 ];
 ```
