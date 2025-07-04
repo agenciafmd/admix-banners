@@ -48,7 +48,13 @@ class Banner extends Component
             foreach ($files as $fileKey => $file) {
                 $collection = $fileKey;
                 $media = $banner->getFirstMedia($collection);
-                $responsiveImages[$file['media']] = $media;
+                if ($collection !== 'video') {
+                    $responsiveImages[$file['media']] = $media;
+                }
+
+                if ($collection === 'video') {
+                    $video = $media;
+                }
             }
 
             return [
@@ -56,7 +62,8 @@ class Banner extends Component
                 'meta' => $banner->meta,
                 'link' => $banner->link,
                 'target' => $banner->target,
-                'images' => $responsiveImages,
+                'images' => $responsiveImages ?? null,
+                'video' => $video ?? null,
             ];
         });
 
