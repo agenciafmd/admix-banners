@@ -9,7 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('banners', static function (Blueprint $table) {
-            $table->string('location', 150);
+            $table->string('location', 150)
+                ->after('star');
         });
     }
 };

@@ -63,6 +63,14 @@
                     :crop-config="config('admix-banners.locations.' . $location . '.files.mobile.crop_config')"
             />
         </div>
+        @if(config('admix-banners.locations.' . $location . '.files.video.show'))
+            <div class="col-md-12 mb-3">
+                <x-form.video
+                        name="form.video"
+                        :label="__('admix-banners::fields.video')"
+                />
+            </div>
+        @endif
         <div class="col-md-6 mb-3">
             <x-form.input
                     name="form.link"

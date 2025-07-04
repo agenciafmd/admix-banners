@@ -15,4 +15,6 @@ return [
     'notebook_files' => 'notebook',
     'mobile' => 'mobile',
     'mobile_files' => 'mobile',
+    'video' => 'video',
+    'video_files' => 'video',
 ];

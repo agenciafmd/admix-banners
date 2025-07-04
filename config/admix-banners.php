@@ -37,6 +37,10 @@ return [
                     'show_meta' => false,
                     'media' => '(max-width: 767px)',
                 ],
+                'video' => [
+                    'max' => 4096,
+                    'show' => false,
+                ],
             ],
         ],
     ],
