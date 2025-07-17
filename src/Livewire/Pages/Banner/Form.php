@@ -239,7 +239,7 @@ class Form extends LivewireForm
             'desktop',
             'notebook',
             'mobile',
-        ]);
+        ], []);
 
         if (config("admix-banners.locations.{$this->location}.files.video.show")) {
             $this->syncMedia($this->banner, 'video');
