@@ -38,8 +38,8 @@ return [
                     'media' => '(max-width: 767px)',
                 ],
                 'video' => [
-                    'max' => 4096,
-                    'show' => false,
+                    // 'max' => 4096,
+                    // 'show' => false,
                 ],
             ],
         ],
