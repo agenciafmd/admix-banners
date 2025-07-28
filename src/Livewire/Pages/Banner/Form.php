@@ -28,6 +28,9 @@ class Form extends LivewireForm
     public string $name = '';
 
     #[Validate]
+    public ?array $meta = null;
+
+    #[Validate]
     public ?string $target = null;
 
     #[Validate]
@@ -88,6 +91,7 @@ class Form extends LivewireForm
             $this->star = $banner->star;
             $this->location = $banner->location;
             $this->name = $banner->name;
+            $this->meta = $banner->meta ?? [];
             $this->target = $banner->target;
             $this->link = $banner->link;
             $this->published_at = $banner->published_at?->format('Y-m-d\TH:i');
@@ -186,6 +190,12 @@ class Form extends LivewireForm
             ];
         }
 
+        $meta = collect($this->meta ?? []);
+        if ($meta->isNotEmpty()) {
+            foreach ($meta as $key => $value) {
+                $rules["meta.{$key}"] = ['nullable'];
+            }
+        }
 
         return $rules;
     }
@@ -209,7 +219,11 @@ class Form extends LivewireForm
             'mobile_files.*' => __('admix-banners::fields.mobile_files'),
             'video' => __('admix-banners::fields.video'),
             'video_files.*' => __('admix-banners::fields.video_files'),
-        ];
+        ] + collect(config('admix-banners.locations.'.$this->location.'.meta') ?? [])
+                ->flatMap(function ($value) {
+                    return ["meta.{$value['name']}" => $value['label']];
+                })
+                ->toArray();
     }
 
     public function save(): bool

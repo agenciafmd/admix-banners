@@ -42,6 +42,34 @@ return [
                     // 'show' => false,
                 ],
             ],
+//            'meta' =>  [
+//                [
+//                    'label' => 'tipo',
+//                    'name' => 'type',
+//                    'options' => [
+//                        [
+//                            'value' => '',
+//                            'label' => '-',
+//                        ],
+//                        [
+//                            'value' => 'Plantas Baixas',
+//                            'label' => 'Plantas Baixas',
+//                        ],
+//                        [
+//                            'value' => 'Implantações',
+//                            'label' => 'Implantações',
+//                        ]
+//                    ],
+//                ],
+//                [
+//                    'label' => 'título',
+//                    'name' => 'title',
+//                ],
+//                [
+//                    'label' => 'subtítulo',
+//                    'name' => 'subtitle',
+//                ],
+//            ]
         ],
     ],
 ];

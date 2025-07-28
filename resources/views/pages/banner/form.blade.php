@@ -71,6 +71,30 @@
                 />
             </div>
         @endif
+        @if(config('admix-banners.locations.' . $location. '.meta'))
+            @foreach (config('admix-banners.locations.' . $location. '.meta') as $field)
+                @if (isset($field['options']) && is_array($field['options']))
+                    <div class="col-md-6 mb-3">
+                        <x-form.select
+                                name="form.meta.{{ $field['name'] }}"
+                                :label="$field['label']"
+                                :options="$field['options']"
+                        />
+                    </div>
+                @else
+                    <div class="col-md-6 mb-3">
+                        <x-form.input
+                                name="form.meta.{{ $field['name'] }}"
+                                :label="$field['label']"
+                        />
+                    </div>
+                @endif
+            @endforeach
+        @else
+            <div class="col-md-12 mb-3">
+                <input type="hidden" name="meta[]">
+            </div>
+        @endif
         <div class="col-md-6 mb-3">
             <x-form.input
                     name="form.link"
