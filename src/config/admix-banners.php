@@ -36,6 +36,11 @@ return [
 //                    'label' => 'subtítulo',
 //                    'name' => 'subtitle',
 //                ],
+//                [
+//                    'label' => 'Descrição',
+//                    'name' => 'description',
+//                    'type' => 'wysiwyg'
+//                ]
 //            ],
 //        ],
     ],
