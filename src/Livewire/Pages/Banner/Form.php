@@ -206,9 +206,6 @@ class Form extends LivewireForm
                 'mimes:mp4',
                 'mimetypes:video/mp4',
                 'max:' . config("admix-banners.locations.{$this->location}.files.video_mobile.max"),
-                Rule::dimensions()
-                    ->maxWidth(640)
-                    ->maxHeight(1280),
             ];
             $rules['video_mobile'] = [
                 'array',
