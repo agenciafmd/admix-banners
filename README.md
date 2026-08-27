@@ -91,6 +91,8 @@ return [
                 'video_mobile' => [
                     // 'max' => 3072,
                     // 'show' => false,
+                    // 'width' => 640,
+                    // 'height' => 1280,
                 ],
             ],
         ],
