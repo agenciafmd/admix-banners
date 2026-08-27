@@ -73,7 +73,16 @@
         @endif
         @if(config('admix-banners.locations.' . $location . '.files.video_mobile.show'))
             <div class="col-md-12 mb-3">
+                <?php
+                    $size = config('admix-banners.locations.' . $location . '.files.video_mobile.max') / 1024;
+                    $width = config('admix-banners.locations.' . $location . '.files.video_mobile.width');
+                    $height = config('admix-banners.locations.' . $location . '.files.video_mobile.height');
+
+                    $message = __('Max size :sizeMB.', ['size' => $size]);
+                    $message .= __('Dimensões máximas: :widthx:heightpx.', ['width' => $width, 'height' => $height]);
+                ?>
                 <x-form.video
+                        :hint="$message"
                         name="form.video_mobile"
                         :label="__('admix-banners::fields.video_mobile')"
                 />
