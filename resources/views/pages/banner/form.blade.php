@@ -71,6 +71,14 @@
                 />
             </div>
         @endif
+        @if(config('admix-banners.locations.' . $location . '.files.video-mobile.show'))
+            <div class="col-md-12 mb-3">
+                <x-form.video
+                        name="form.video_mobile"
+                        :label="__('admix-banners::fields.video_mobile')"
+                />
+            </div>
+        @endif
         @if(config('admix-banners.locations.' . $location. '.meta'))
             @foreach (config('admix-banners.locations.' . $location. '.meta') as $field)
                 @if (isset($field['options']) && is_array($field['options']))

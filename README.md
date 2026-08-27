@@ -88,6 +88,10 @@ return [
                     // 'max' => 4096,
                     // 'show' => true,
                 ],
+                'video-mobile' => [
+                    // 'max' => 3072,
+                    // 'show' => false,
+                ],
             ],
         ],
         'home-destaque' => [...],

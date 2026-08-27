@@ -67,6 +67,13 @@ class Form extends LivewireForm
     public array $video_meta = [];
 
     #[Validate]
+    public array $video_mobile_files = [];
+
+    #[Validate]
+    public array $video_mobile_meta = [];
+
+
+    #[Validate]
     public Collection $desktop;
 
     #[Validate]
@@ -77,6 +84,8 @@ class Form extends LivewireForm
 
     #[Validate]
     public Collection $video;
+    #[Validate]
+    public Collection $video_mobile;
 
     public function setModel(Banner $banner, string $location): void
     {
@@ -85,6 +94,7 @@ class Form extends LivewireForm
         $this->notebook = collect();
         $this->mobile = collect();
         $this->video = collect();
+        $this->video_mobile = collect();
         ($banner->exists) ?: $this->location = $location;
         if ($banner->exists) {
             $this->is_active = $banner->is_active;
@@ -100,6 +110,7 @@ class Form extends LivewireForm
             $this->notebook = $banner->notebook;
             $this->mobile = $banner->mobile;
             $this->video = $banner->video;
+            $this->video_mobile = $banner->video_mobile;
         }
     }
 
@@ -190,6 +201,21 @@ class Form extends LivewireForm
             ];
         }
 
+        if (config("admix-banners.locations.{$this->location}.files.video_mobile.show")) {
+            $rules['video_mobile_files.*'] = [
+                'mimes:mp4',
+                'mimetypes:video/mp4',
+                'max:' . config("admix-banners.locations.{$this->location}.files.video_mobile.max"),
+            ];
+            $rules['video_mobile'] = [
+                'array',
+                'nullable',
+            ];
+            $rules['video_mobile_meta'] = [
+                'array',
+            ];
+        }
+
         $meta = collect($this->meta ?? []);
         if ($meta->isNotEmpty()) {
             foreach ($meta as $key => $value) {
@@ -219,6 +245,8 @@ class Form extends LivewireForm
             'mobile_files.*' => __('admix-banners::fields.mobile_files'),
             'video' => __('admix-banners::fields.video'),
             'video_files.*' => __('admix-banners::fields.video_files'),
+            'video_mobile' => __('admix-banners::fields.video_mobile'),
+            'video_mobile_files.*' => __('admix-banners::fields.video_mobile_files'),
         ] + collect(config('admix-banners.locations.'.$this->location.'.meta') ?? [])
                 ->flatMap(function ($value) {
                     return ["meta.{$value['name']}" => $value['label']];
@@ -235,14 +263,17 @@ class Form extends LivewireForm
             'notebook',
             'mobile',
             'video',
+            'video_mobile',
             'desktop_files',
             'notebook_files',
             'mobile_files',
             'video_files',
+            'video_mobile_files',
             'desktop_meta',
             'notebook_meta',
             'mobile_meta',
             'video_meta',
+            'video_mobile_meta',
         ]));
 
         if (!$this->banner->exists) {
@@ -257,6 +288,10 @@ class Form extends LivewireForm
 
         if (config("admix-banners.locations.{$this->location}.files.video.show")) {
             $this->syncMedia($this->banner, 'video');
+        }
+
+        if (config("admix-banners.locations.{$this->location}.files.video_mobile.show")) {
+            $this->syncMedia($this->banner, 'video_mobile');
         }
 
         return $this->banner->save();

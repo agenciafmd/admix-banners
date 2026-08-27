@@ -48,12 +48,15 @@ class Banner extends Component
             foreach ($files as $fileKey => $file) {
                 $collection = $fileKey;
                 $media = $banner->getFirstMedia($collection);
-                if ($collection !== 'video') {
+                if ($collection !== 'video' && $collection !== 'video_mobile') {
                     $responsiveImages[$file['media']] = $media;
                 }
 
                 if ($collection === 'video') {
                     $video = $media;
+                }
+                if ($collection === 'video_mobile') {
+                    $videoMobile = $media;
                 }
             }
 
@@ -64,6 +67,7 @@ class Banner extends Component
                 'target' => $banner->target,
                 'images' => $responsiveImages ?? null,
                 'video' => $video ?? null,
+                'video_mobile' => $videoMobile ?? null,
             ];
         });
 

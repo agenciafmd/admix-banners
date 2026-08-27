@@ -17,4 +17,6 @@ return [
     'mobile_files' => 'mobile',
     'video' => 'video',
     'video_files' => 'video',
+    'video_mobile' => 'video mobile',
+    'video_mobile_files' => 'video mobile',
 ];
