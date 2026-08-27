@@ -88,7 +88,7 @@ return [
                     // 'max' => 4096,
                     // 'show' => true,
                 ],
-                'video-mobile' => [
+                'video_mobile' => [
                     // 'max' => 3072,
                     // 'show' => false,
                 ],

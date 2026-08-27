@@ -41,7 +41,7 @@ return [
                     // 'max' => 4096,
                     // 'show' => false,
                 ],
-                'video-mobile' => [
+                'video_mobile' => [
                     // 'max' => 3072,
                     // 'show' => false,
                 ],

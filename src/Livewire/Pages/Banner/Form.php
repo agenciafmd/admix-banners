@@ -201,11 +201,14 @@ class Form extends LivewireForm
             ];
         }
 
-        if (config("admix-banners.locations.{$this->location}.files.video-mobile.show")) {
+        if (config("admix-banners.locations.{$this->location}.files.video_mobile.show")) {
             $rules['video_mobile_files.*'] = [
                 'mimes:mp4',
                 'mimetypes:video/mp4',
-                'max:' . config("admix-banners.locations.{$this->location}.files.video-mobile.max"),
+                'max:' . config("admix-banners.locations.{$this->location}.files.video_mobile.max"),
+                Rule::dimensions()
+                    ->maxWidth(640)
+                    ->maxHeight(1280),
             ];
             $rules['video_mobile'] = [
                 'array',
@@ -290,7 +293,7 @@ class Form extends LivewireForm
             $this->syncMedia($this->banner, 'video');
         }
 
-        if (config("admix-banners.locations.{$this->location}.files.video-mobile.show")) {
+        if (config("admix-banners.locations.{$this->location}.files.video_mobile.show")) {
             $this->syncMedia($this->banner, 'video_mobile');
         }
 

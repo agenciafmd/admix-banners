@@ -71,7 +71,7 @@
                 />
             </div>
         @endif
-        @if(config('admix-banners.locations.' . $location . '.files.video-mobile.show'))
+        @if(config('admix-banners.locations.' . $location . '.files.video_mobile.show'))
             <div class="col-md-12 mb-3">
                 <x-form.video
                         name="form.video_mobile"
